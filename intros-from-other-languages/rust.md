@@ -71,16 +71,16 @@ language, and they do not replace Rust's type checker. They are useful
 when a script has grown enough that function boundaries deserve explicit
 checks.
 
-Rust habits that need adjustment:
+Gotchas when you're getting started with ZuzuScript:
 
 - Variables are introduced with `let`, but assignment uses `:=`.
 - Zuzu values are dynamically managed; there is no ownership or borrow
   checker model.
 - `=` is numeric equality in expressions, not assignment.
-- Type-aware equality is written as `==` or the Unicode alias `≡`.
+- Type-aware equality is written as `≡` or the ASCII alias `==`.
 - String concatenation uses `_`.
 - Dict lookup uses `value{field}` rather than `value.field`; dots are
-  for methods and object members.
+  for method calls.
 - Errors are thrown with `throw` or `die`, and can be handled with
   `try` forms rather than `Result<T, E>`.
 

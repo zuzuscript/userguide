@@ -20,10 +20,10 @@ formats active user names.
 ZuzuScript:
 
 ```zzs
-function active_labels ( Array users ) -> Array {
-	let labels := [];
+function active_labels ( Array users ) → Array {
+	const labels := [];
 
-	for ( let user in users ) {
+	for ( const user in users ) {
 		if ( user{active} ) {
 			labels.push( user{name} _ " is active" );
 		}
@@ -55,7 +55,7 @@ function activeLabels(users: User[]): string[] {
 ```
 
 The outline is similar: function, array, loop, condition, push, return.
-Zuzu uses `function name ( Type arg ) -> Type`, string concatenation with
+Zuzu uses `function name ( Type arg ) → Type`, string concatenation with
 `_`, and dict lookup with `user{name}`. It keeps type information close
 to the function boundary without requiring interface declarations for
 small scripts.
@@ -81,12 +81,12 @@ TypeScript habits that need adjustment:
 
 - Binding and assignment use `:=`; `=` is numeric equality inside
   expressions.
-- Type-aware equality is `==` or the Unicode alias `≡`.
+- Type-aware equality is `≡` or the ASCII alias `==`.
 - Zuzu annotations are runtime checks, not static types.
 - String comparison uses `eq`, `ne`, `lt`, and `gt` for lexical meaning.
 - String concatenation uses `_`, not `+`.
-- Dict lookup uses `value{key}`; method/property calls use dots.
-- Zuzu modules use forms such as `from std/data/json import JSON;`.
+- Dict lookup uses `value{key}`; method calls use dots.
+- Zuzu modules are imported like `from std/data/json import JSON;`.
 
 A useful first translation is that TypeScript interfaces often become
 plain Zuzu dicts until the script proves it needs a named class or a

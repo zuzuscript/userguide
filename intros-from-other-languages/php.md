@@ -19,13 +19,13 @@ names of paid orders.
 ZuzuScript:
 
 ```zzs
-let orders := [
+const orders := [
 	{ id: 100, customer: "Ada", paid: true },
 	{ id: 101, customer: "Grace", paid: false },
 	{ id: 102, customer: "Lin", paid: true },
 ];
 
-for ( let order in orders ) {
+for ( const order in orders ) {
 	if ( order{paid} ) {
 		say order{customer};
 	}
@@ -52,35 +52,37 @@ foreach ( $orders as $order ) {
 
 The structure is similar: array of records, loop, condition, field
 lookup, output. Zuzu makes the records dict values with `key: value`
-syntax, uses `for ( let item in items )`, and reads fields with
+syntax, uses `for ( myvar in mylist )`, and reads fields with
 `order{customer}`.
 
 PHP programmers will also recognise classes and methods:
 
 ```zzs
 class Formatter {
+	let prefix := "#";
 	method order_label ( order ) {
-		return "#" _ order{id} _ " " _ order{customer};
+		return prefix _ order{id} _ " " _ order{customer};
 	}
 }
 
-let formatter := new Formatter();
+let formatter := new Formatter( prefix: ">>" );
 say formatter.order_label( orders[0] );
 ```
 
 Zuzu's class syntax is lighter, and named constructor arguments are
-common when creating objects with initial fields.
+used when creating objects with initial fields.
 
 Important gotchas:
 
 - No `$` sigil is used for ordinary variables.
 - Binding and assignment use `:=`.
 - Numeric equality in expressions is `=`, while type-aware equality uses
-  `==` or the Unicode alias `≡`.
+  `≡` or the ASCII alias `==`.
 - String concatenation uses `_`, not `.`.
 - String comparison uses words such as `eq`, `ne`, `lt`, and `gt`.
 - Dict lookup uses `value{key}`, not `$value["key"]`.
-- Comments use `//` and `/* ... */`, which should feel familiar.
+- Comments use `//` and `/* ... */`, which should feel familiar, but
+  not `#`.
 
 A useful first translation is that many small PHP arrays become Zuzu
 dicts with lighter field access. You do not need to choose between a
@@ -103,14 +105,14 @@ indexes, loops, `array_filter`, `array_map`, or helper libraries. Zuzu
 can query the data directly:
 
 ```zzs
-let response := {
+const response := {
 	orders: [
 		{ id: 100, paid: true },
 		{ id: 101, paid: false },
 	],
 };
 
-let unpaid := response @@ "/orders/*[!paid]/id";
+const unpaid := response @@ "/orders/*[!paid]/id";
 say unpaid;
 ```
 

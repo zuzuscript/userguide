@@ -11,7 +11,9 @@ The syntax looks less like Ruby at first because Zuzu uses braces,
 semicolons, and explicit binding with `let name := value`. But the
 everyday style is familiar: arrays and dicts are direct values, methods
 live on objects, blocks of behaviour can be passed around, and small
-scripts can still be organized with functions and classes.
+scripts can still be organized with functions and classes. You will
+also feel at home with postfix `if` and `unless` expressions, and
+traits which feel a lot like Ruby mixins.
 
 Here is a small collection transformation in both languages. It selects
 enabled accounts and prints labels.
@@ -25,17 +27,9 @@ let accounts := [
 	{ name: "Lin", enabled: true },
 ];
 
-let labels := [];
+let enabled := accounts.grep( fn acct → acct{enabled} );
 
-for ( let account in accounts ) {
-	if ( account{enabled} ) {
-		labels.push( account{name} _ " is enabled" );
-	}
-}
-
-for ( let label in labels ) {
-	say label;
-}
+enabled.each( fn acct → say `${acct{name}} is enabled` );
 ```
 
 Ruby:
@@ -47,19 +41,10 @@ accounts = [
   { name: "Lin", enabled: true },
 ]
 
-labels = accounts
-  .select { |account| account[:enabled] }
-  .map { |account| "#{account[:name]} is enabled" }
+enabled = accounts.select { |acct| acct[:enabled] }
 
-labels.each { |label| puts label }
+enabled.each { |acct| puts "#{acct[:name]} is enabled" }
 ```
-
-The resemblance is in the collection workflow: select the interesting
-items, build labels, then print them. Zuzu uses explicit loops here,
-while Ruby uses blocks; both keep the transformation close to the data.
-Zuzu uses `say` where Ruby uses `puts`. String concatenation uses `_`,
-though template strings are also available in Zuzu for many interpolation
-cases.
 
 Zuzu classes are also lightweight enough to feel natural in scripts:
 
@@ -73,30 +58,24 @@ class Job {
 }
 
 let job := new Job( name: "deploy" );
-say job.label();
+say job.label;
 ```
 
 The named argument constructor style keeps object creation readable
 without a lot of setup code.
 
-Ruby habits that need adjustment:
+Some gotchas that might cach you out:
 
 - Blocks are not Ruby blocks. Use `fn value -> expression` or full
   `function` declarations.
 - Binding and assignment use `:=`.
-- Numeric equality is `=`, while type-aware equality is `==` or the
-  Unicode alias `≡`.
+- Numeric equality is `=`, while type-aware equality is `≡` or the
+  ASCII alias `==`.
 - String comparison uses `eq`, `ne`, `lt`, and `gt` for lexical meaning.
 - String concatenation uses `_`, not `+`.
-- Dict lookup commonly uses `value{key}`, not `value[:key]`.
+- Dict lookup uses `value{key}`, not `value[:key]`.
 - `if`, `for`, `while`, functions, and classes use braces.
-
-A useful first translation is that Zuzu collection code is usually more
-explicit than Ruby block chains, but it should still stay close to the
-data. When a transformation becomes hard to read, the usual Zuzu answer
-is the same as the Ruby answer: name the operation. Pull repeated logic
-into a function or method, keep the collection code obvious, and let the
-script tell the story in small steps.
+- String interpolation uses `\`... ${...} ...\``
 
 Zuzu and Ruby both care about regular expressions and text handling.
 Zuzu makes regex matching a direct operator:
@@ -119,7 +98,7 @@ let payload := {
 	],
 };
 
-let failing := payload @@ "/projects/*[status == 'red']/name";
+let failing := payload @@ "/projects/*[status ≡ 'red']/name";
 say failing;
 ```
 

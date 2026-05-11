@@ -1,8 +1,8 @@
 # Zuzu for Java Programmers
 
 Java programmers usually come to scripting languages looking for less
-ceremony: fewer files, less scaffolding, and faster feedback for small
-jobs. ZuzuScript is designed for that space. It is useful for
+ceremony: fewer files, less scaffolding, no compiling, and faster feedback
+for small jobs. ZuzuScript is designed for that space. It is useful for
 automation, data transforms, text processing, command-line helpers, HTTP
 glue, and small programs where creating a full Java project would feel
 too heavy.
@@ -51,7 +51,7 @@ for (var user : users) {
 
 The logic is the same: make records, loop, branch, and print. Zuzu keeps
 the record shape inline as dict values and uses `say` for output. That
-makes the one-file script version shorter, while still allowing you to
+makes the one-file script version shorter, but Zuzu still allows you to
 introduce classes when an object deserves a name.
 
 A Zuzu class is lightweight:
@@ -73,7 +73,7 @@ That should feel structurally familiar, but it is not Java's static type
 system. Zuzu annotations are runtime contracts, not compile-time
 generics, interfaces, or overload resolution.
 
-Java habits that need adjustment:
+Zuzu gotchas that might catch you by surprise:
 
 - There is no required class wrapper for every script.
 - Binding and assignment use `:=`.

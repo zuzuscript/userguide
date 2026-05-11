@@ -1,7 +1,7 @@
 # Zuzu for Python Programmers
 
 Python programmers usually look for three things in a new scripting
-language: readable code, good collection literals, and a short path from
+language: readable code, good collection handling, and a short path from
 idea to running program. ZuzuScript is aimed at the same kind of work:
 automation, text cleanup, small command-line tools, data transforms,
 HTTP glue, and scripts that can become modules when they grow.
@@ -17,13 +17,13 @@ and prints their names.
 ZuzuScript:
 
 ```zzs
-let rows := [
+const rows := [
 	{ name: "Ada", active: true },
 	{ name: "Grace", active: false },
 	{ name: "Lin", active: true },
 ];
 
-for ( let row in rows ) {
+for ( const row in rows ) {
 	if ( row{active} ) {
 		say row{name};
 	}
@@ -50,6 +50,21 @@ loops are direct. The main syntactic changes are braces around blocks,
 `true` and `false` in lowercase, and `row{name}` for dict-style field
 lookup.
 
+Python list comprehensions are also easy to translate:
+
+```python
+for name in [ x["name"] for x in rows if x["active"] ]:
+    print(name)
+```
+
+Becomes:
+
+``zzs
+for ( let name in rows.grep(fn x → x{active}).map(fn x → x{name}) ) {
+	say name;
+}
+```
+
 Zuzu also has a familiar module story. You import names from modules,
 write functions for reusable logic, and use classes when modelling an
 object is clearer than passing dicts around. Methods are called with
@@ -58,9 +73,10 @@ object is clearer than passing dicts around. Methods are called with
 The differences are worth learning early:
 
 - Assignment and binding use `:=`, not `=`.
-- Numeric equality uses `=`, while type-aware equality uses `==` or its
-  Unicode alias `≡`.
-- String concatenation uses `_`, not `+`.
+- Numeric equality uses `=`, while type-aware equality uses `≡` or its
+  ASCII alias `==`.
+- String concatenation uses `_`, not `+`, so you can rely on `+` always
+  really being addition.
 - Blocks always use braces, so indentation is style rather than syntax.
 - Zuzu has separate numeric and string comparison operators. Use `lt`,
   `gt`, `eq`, and `ne` for lexical string comparisons.
@@ -81,8 +97,8 @@ counts of repeated values. That makes some counting and membership tasks
 more direct than repeatedly reaching for `set`, `Counter`, or helper
 imports.
 
-The feature that often feels most Zuzu-like is path querying through
-nested data. In Python, extracting a nested JSON field usually means
+The feature that often feels most uniquely Zuzu-like is path querying
+through nested data. In Python, extracting a nested JSON field usually means
 indexing, `.get()` calls, comprehensions, or a third-party query library.
 In Zuzu, the query can sit directly in the expression:
 

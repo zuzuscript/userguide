@@ -1,6 +1,6 @@
 # Zuzu for JavaScript Programmers
 
-JavaScript programmers will recognise much of ZuzuScript's surface
+JavaScript programmers will recognize much of ZuzuScript's surface
 shape. It uses braces for blocks, `let` and `const` for bindings, arrays
 with `[ ... ]`, object-like dict literals with `{ ... }`, method calls
 with dots, callbacks, classes, constructors, and `async`/`await`. If you
@@ -17,13 +17,13 @@ active users.
 ZuzuScript:
 
 ```zzs
-let users := [
+const users := [
 	{ name: "Ada", active: true },
 	{ name: "Grace", active: false },
 	{ name: "Lin", active: true },
 ];
 
-for ( let user in users ) {
+for ( const user in users ) {
 	if ( user{active} ) {
 		say user{name} _ " is active";
 	}
@@ -61,20 +61,21 @@ Some gotchas are important:
 
 - `=` is numeric equality in expressions. It is not assignment.
 - Binding and assignment use `:=`.
-- Type-aware equality is written with `==` or the Unicode alias `≡`; do
+- Type-aware equality is written with `≡` or the ASCII alias `==`; do
   not assume JavaScript's loose `==`.
 - String comparison uses words such as `eq`, `ne`, `lt`, and `gt`.
 - String concatenation is `_`, not `+`.
-- Dict fields are commonly read with `{}` syntax, as in `user{name}`.
-- Comments use `//` and `/* ... */`, so that part is exactly familiar.
+- Dict fields are read with `{}` syntax, as in `user{name}`.
 
 A useful first translation is that Zuzu separates jobs JavaScript often
-loads onto the same operator. `+` is not the general string builder,
-`==` is not loose equality, and dict lookup is visibly different from
-method access. This makes Zuzu a little more explicit, especially in
-scripts that mix command-line strings, JSON numbers, booleans, and nulls.
-The result is still compact, but fewer conversions are hidden in familiar
-punctuation.
+loads onto the same operator. Indead of `+` acting as both addition and
+string concatenation, and needing to guess from context what it means,
+in ZuzuScript it is always numeric addition. There are different operators
+for equality depending on if you want a numeric, string, or type-aware
+comparison. Dict lookup is visibly different from method calls. This
+makes Zuzu a little more explicit, especially in scripts that mix
+command-line strings, JSON, numbers, booleans, and nulls. The result is
+still compact, but fewer conversions are hidden in familiar punctuation.
 
 Zuzu also has collection types that JavaScript does not make as central.
 Sets and bags have literal syntax, and operators such as union and
@@ -87,7 +88,7 @@ if ( line ~ /^status=(ok|warn|fail)$/ ) {
 }
 ```
 
-Where Zuzu becomes especially concise is JSON-like data querying.
+Where Zuzu becomes especially concise is JSONPath-like data querying.
 JavaScript often reaches for optional chaining, `map`, `filter`, and
 small helper functions to traverse nested structures. Zuzu has path
 operators:
@@ -108,9 +109,16 @@ say stable_versions;
 for existence. This is useful when a script spends its time reading API
 responses, package metadata, or configuration blobs.
 
-For a JavaScript programmer, the best mental model is: familiar brace
-syntax and object-oriented scripting, but with Perl-style text power,
-explicit comparison families, and built-in nested-data queries. Continue
-with [Chapter 1 of the main guide](../01-hello-world-and-everything-after.md)
-to install Zuzu, run files, try the REPL, and learn the core syntax in
-order.
+Chaining is still possible:
+
+```zzs
+say payload{releases}.grep(fn r → r{stable}).map(fn r → r{release});
+```
+
+But paths hide a lot of the "plumbing".
+
+For a JavaScript programmer, the best mental model is: familiar brace syntax
+and object-oriented scripting, but with Perl-style text processing power,
+explicit comparison families, and built-in nested-data queries. Continue with
+[Chapter 1 of the main guide](../01-hello-world-and-everything-after.md) to
+install Zuzu, run files, try the REPL, and learn the core syntax in order.

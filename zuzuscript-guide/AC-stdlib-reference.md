@@ -295,62 +295,12 @@ Provides a full ZPath query engine. See L<https://zpath.me>.
 
 **Exports:** `ZPath`.
 
-## std/path/z/context
-Internal support module for `std/path/z` evaluation contexts. It is
-documented for maintainers, but normal users should import `std/path/z`.
-
-**Exports:** `Ctx`.
-
-## std/path/z/evaluate
-Internal evaluator for parsed ZPath expressions.
-
-**Exports:** `Evaluator`.
-
-## std/path/z/functions
-Internal function registry for ZPath evaluation.
-
-**Exports:** `Func`, `STANDARD_FUNCTIONS`.
-
-## std/path/z/lexer
-Internal lexer for ZPath expressions.
-
-**Exports:** `Lexer`.
-
-## std/path/z/node
-Internal node wrappers used by the ZPath evaluator for arrays, dicts,
-sets, bags, XML nodes, paths, times, and scalar values.
-
-**Exports:** `Node`, `SimpleNode`, `StringNode`, `NumberNode`,
-`BooleanNode`, `NullNode`, `ArrayNode`, `SetNode`, `BagNode`,
-`DictNode`, `PairListNode`, `PairNode`, `XmlNodeNode`, `TimeNode`,
-`PathNode`.
-
-## std/path/z/operators
-Internal operator registry and helper trait for ZPath evaluation.
-
-**Exports:** `EvalHelpers`, `Operator`, `STANDARD_OPERATORS`.
-
-## std/path/z/parser
-Internal parser for ZPath expressions.
-
-**Exports:** `Parser`.
-
 ## std/path/zz
 Provides ZuzuScript-flavoured path selectors. It reuses the ZPath
 traversal, parser, lexer, assignment, and reference machinery while using
 ZZPath expression operators and functions.
 
 **Exports:** `ZZPath`.
-
-## std/path/zz/functions
-Internal function registry for ZZPath expression evaluation.
-
-**Exports:** `STANDARD_FUNCTIONS`.
-
-## std/path/zz/operators
-Internal operator registry for ZZPath expression evaluation.
-
-**Exports:** `Operator`, `STANDARD_OPERATORS`.
 
 ## std/proc
 Provides process execution and signal helpers, including pipeline orchestration and environment utilities. It is the standard interface for subprocess control.

@@ -62,6 +62,27 @@ Provides JSON parsing and serialization with optional pretty/canonical/UTF-8 beh
 
 **Exports:** `JSON`.
 
+## std/data/kdl
+Provides a pure-Zuzu KDL document model, parser, and serializer. It
+returns explicit document, node, and value objects, and can load from or
+dump to `std/io` paths when filesystem access is allowed.
+
+**Exports:** `KDL`, `KDLDocument`, `KDLNode`, `KDLValue`.
+
+## std/data/kdl/json
+Provides JSON-in-KDL conversion helpers. It converts parsed KDL documents
+or nodes to native Zuzu data structures, and converts JSON-like Zuzu data
+back to KDL documents.
+
+**Exports:** `kdl_to_json`, `json_to_kdl`.
+
+## std/data/kdl/xml
+Provides XML-in-KDL conversion helpers. It converts KDL documents or nodes
+to XML documents, and converts XML documents or nodes back to KDL
+documents.
+
+**Exports:** `kdl_to_xml`, `xml_to_kdl`.
+
 ## std/data/toml
 Provides TOML parsing and serialization for dictionary-like configuration data. It includes helpers for loading from and dumping to paths.
 
@@ -191,6 +212,14 @@ Provides configurable structured-ish logging with levels and optional timestamps
 
 **Exports:** `Log`.
 
+## std/mail
+Provides mail address, header, body, message parsing, date formatting, and
+message serialization helpers. It is intended for RFC-style message
+composition and parsing; delivery is handled by `std/net/smtp`.
+
+**Exports:** `Address`, `Head`, `Body`, `Message`, `Parser`,
+`Serializer`, `parse_datetime`, `format_datetime`.
+
 ## std/marshal
 Provides Zuzu Marshal CBOR v1 binary serialization through `dump`,
 `load`, and `safe_to_dump`. It supports scalars, core collections,
@@ -224,15 +253,37 @@ Provides conversion of numbers into Roman numeral text. It includes support for 
 
 **Exports:** `roman`.
 
+## std/net/dns
+Provides runtime-supported DNS lookup helpers for forward record lookups,
+address extraction, and reverse DNS. Synchronous and asynchronous entry
+points are available where the runtime supports them.
+
+**Exports:** `lookup`, `lookup_async`, `addresses`,
+`addresses_async`, `reverse`, `reverse_async`.
+
 ## std/net/http
 Provides HTTP request/response primitives and user-agent utilities for network calls. It also includes cookie-jar support for request state.
 
 **Exports:** `CookieJar`, `Request`, `Response`, `UserAgent`.
 
+## std/net/smtp
+Provides runtime-supported low-level mail delivery over SMTP or
+sendmail-compatible transports. It works with explicit envelope senders,
+recipients, ordered headers, and raw binary message bodies.
+
+**Exports:** `Mailer`, `MailResult`.
+
 ## std/net/url
 Provides URL escaping/unescaping, parsing, and template filling helpers. It is used for URL normalization and query/path manipulation tasks.
 
 **Exports:** `escape`, `fill_template`, `parse`, `unescape`.
+
+## std/path/kdl
+Provides KDL Query Language selectors for KDL documents and nodes. It
+offers the same read-oriented path API shape as `std/path/z` and
+`std/path/simple`, plus KDL-specific value and property helpers.
+
+**Exports:** `KDLQuery`.
 
 ## std/path/simple
 Provides a simplified path-expression utility for navigating nested structures with concise selectors. It is a lighter-weight alternative to full ZPath queries.
@@ -284,10 +335,44 @@ Internal parser for ZPath expressions.
 
 **Exports:** `Parser`.
 
+## std/path/zz
+Provides ZuzuScript-flavoured path selectors. It reuses the ZPath
+traversal, parser, lexer, assignment, and reference machinery while using
+ZZPath expression operators and functions.
+
+**Exports:** `ZZPath`.
+
+## std/path/zz/functions
+Internal function registry for ZZPath expression evaluation.
+
+**Exports:** `STANDARD_FUNCTIONS`.
+
+## std/path/zz/operators
+Internal operator registry for ZZPath expression evaluation.
+
+**Exports:** `Operator`, `STANDARD_OPERATORS`.
+
 ## std/proc
 Provides process execution and signal helpers, including pipeline orchestration and environment utilities. It is the standard interface for subprocess control.
 
 **Exports:** `Env`, `Proc`.
+
+## std/result
+Provides a small, subclassable `Result` object for returning explicit
+success or failure values without throwing an exception. It is modelled on
+a simplified Rust-style result type.
+
+**Exports:** `Result`.
+
+## std/secure
+Provides runtime-supported secure services and capability inspection for
+random generation, password hashing, key derivation, authenticated
+encryption, signing, key agreement, certificate handling, and TLS identity
+objects.
+
+**Exports:** `Secure`, `SecureRandom`, `PasswordHash`,
+`KeyDerivation`, `Cipher`, `KeyAgreement`, `SigningKey`,
+`Certificate`, `PrivateKey`, `PublicKey`, `SealedBox`, `TlsIdentity`.
 
 ## std/string
 Provides common string manipulation and formatting helpers used across user modules and serializers. It includes substring, search, case conversion, and join/split helpers.
@@ -298,6 +383,13 @@ Provides common string manipulation and formatting helpers used across user modu
 Provides base64 and URL-safe base64 encode/decode helpers. It converts between binary values and textual transport forms.
 
 **Exports:** `decode`, `decode_urlsafe`, `encode`, `encode_urlsafe`.
+
+## std/string/quoted_printable
+Provides quoted-printable encoding and decoding helpers for RFC 2045-style
+byte transport. Encoding returns ASCII text; decoding returns a
+`BinaryString`.
+
+**Exports:** `encode`, `decode`.
 
 ## std/task
 Provides the task type, cancellation objects, channels, timers, and
@@ -312,6 +404,12 @@ combinators used with `async`, `await`, and `spawn`.
 Provides a full ZTemplate templating engine. See L<https://zpath.me>.
 
 **Exports:** `ZTemplate`.
+
+## std/template/zz
+Provides a ZZPath-backed template engine. It subclasses `std/template/z`'s
+`ZTemplate` and renders template expressions using `std/path/zz`.
+
+**Exports:** `ZZTemplate`.
 
 ## std/time
 Provides time value and parser utilities, including format-driven parsing of date/time strings. It is the standard time abstraction for core scripts.
@@ -332,6 +430,13 @@ Provides UUID generation helpers for both textual and binary forms. It is intend
 
 **Exports:** `create_uuid`, `create_uuid_binary`.
 
+## std/web
+Provides request, response, route, and route collection objects for simple
+web applications. It includes parameter parsing, cookies, rendering
+helpers, route matching, and dispatch support.
+
+**Exports:** `Request`, `Response`, `RouteMatch`, `Route`, `Routes`.
+
 ## std/worker
 Provides isolated workers for shared-nothing parallel work. Worker
 payloads, return values, and messages are copied through `std/marshal`;
@@ -339,6 +444,20 @@ if `std/worker` imports successfully, workers are available. The module
 requires the `worker` runtime capability.
 
 **Exports:** `Worker`, `WorkerHandle`.
+
+## std/zuzuzoo
+Provides distribution metadata queries, source archive inspection,
+dependency-aware install and removal planning, installation, verification,
+latest-version checks, upgrade checks, and formatting helpers for Zuzu
+distribution workflows.
+
+**Exports:** `ZuzuzooLock`, `Zuzuzoo`, `compare_versions`,
+`list_installed`, `query`, `query_distribution`, `is_installed`,
+`installed_version`, `pretty_json`, `format_json`, `fetch_source`,
+`load_distribution`, `dependency_roots`, `find_dependency`,
+`plan_install`, `plan_remove`, `verify`, `latest`, `can_upgrade`,
+`install`, `remove`, `run_distribution_tests`, `execute_removal`,
+`format_install_plan`, `format_remove_plan`.
 
 ## test/more
 Provides TAP-style assertion helpers for tests, including ok/is/isnt-style checks and subtests. It is the common ergonomic testing layer for Zuzu test scripts.

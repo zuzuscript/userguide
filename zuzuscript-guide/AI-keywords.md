@@ -9,9 +9,10 @@ are included too.
 
 ## Alphabetical List
 
-`abs`, `and`, `as`, `assert`, `async`, `await`, `but`, `can`, `case`,
-`catch`, `ceil`, `class`, `clear`, `cmp`, `cmpi`, `const`, `continue`,
-`debug`, `default`, `die`, `do`, `does`, `else`, `eq`, `eqi`,
+`__argc__`, `__file__`, `__global__`, `__system__`, `abs`, `and`, `as`,
+`assert`, `async`, `await`, `but`, `can`, `case`, `catch`, `ceil`, `class`,
+`clear`, `cmp`, `cmpi`, `const`, `continue`, `debug`, `default`, `die`,
+`do`, `does`, `else`, `eq`, `eqi`,
 `equivalentof`, `extends`, `false`, `floor`, `fn`, `for`, `from`,
 `function`, `ge`, `gei`, `get`, `gt`, `gti`, `has`, `if`, `import`, `in`,
 `instanceof`, `int`, `intersection`, `last`, `lc`, `le`, `lei`, `length`,
@@ -25,6 +26,10 @@ are included too.
 
 | Keyword | Description |
 |---|---|
+| `__argc__` | Function-local const containing the positional argument count for the current call. |
+| `__file__` | File-local const containing the current file as a `std/io` `Path`, or `null` when `fs` is denied. |
+| `__global__` | Runtime-global dictionary shared by loaded code. |
+| `__system__` | Read-only runtime and capability information dictionary. |
 | `abs` | Prefix operator for absolute value. |
 | `and` | Boolean conjunction operator. |
 | `as` | Introduces an import alias. |

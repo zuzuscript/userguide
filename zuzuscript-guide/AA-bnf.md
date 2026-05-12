@@ -537,6 +537,7 @@ The following are reserved and cannot be used as identifiers:
 "from" "import" "as"
 "try" "catch" "throw" "die" "do"
 "warn" "say" "print" "debug" "assert"
+"__argc__" "__file__" "__global__" "__system__"
 ```
 
 ## 10. Lexical rules (summary)

@@ -123,11 +123,16 @@ Use `--no-test` to skip tests.
 - scripts: `$HOME/.zuzu/bin`
 - metadata: `$HOME/.zuzu/meta`
 
+On Windows, the default per-user module directory is
+`%LOCALAPPDATA%\Zuzu\modules`.
+
 With `--global`:
 
 - modules: `/var/lib/zuzu/modules`
 - scripts: `/usr/local/bin`
 - metadata: `/var/lib/zuzu/meta`
+
+On Windows, the global module directory is `%ProgramData%\Zuzu\modules`.
 
 Overrides:
 

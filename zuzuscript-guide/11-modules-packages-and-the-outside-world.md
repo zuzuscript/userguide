@@ -135,25 +135,43 @@ That keeps your module's "front door" obvious.
 
 ## 11.4 Search paths and package layout
 
-There are two common ways modules become discoverable:
+Modules are resolved only through the runtime's explicit module search
+path. The runtime does not add the current working directory, the script's
+directory, repository checkout paths, or test fixture directories
+automatically.
 
-1. runtime lib paths,
-2. script-relative discovery.
+The search path order is:
 
-Integration tests show both patterns.
+1. directories passed with `-I`, in command-line order,
+2. entries from `ZUZULIB`, split with the platform path-list separator
+   (`:` on Unix, `;` on Windows),
+3. the user third-party module directory, if it exists,
+4. the system third-party module directory, if it exists,
+5. `ZUZU_STDLIB`, if set, otherwise the runtime's installed stdlib modules.
+
+All entries are resolved to absolute paths before user code runs. Relative
+paths in `-I`, `ZUZULIB`, and `ZUZU_STDLIB` are resolved against the
+interpreter's initial current working directory and do not change meaning
+if the script later changes directory.
+
+`ZUZU_STDLIB` is a single path, not a path list. If it is set, it fully
+replaces the installed stdlib path.
+
+On Unix, third-party modules normally live in `~/.zuzu/modules` for the
+current user and `/var/lib/zuzu/modules` system-wide. On Windows, the
+corresponding locations are `%LOCALAPPDATA%\Zuzu\modules` and
+`%ProgramData%\Zuzu\modules`.
+
+`__system__{inc}` exposes the final search path as a read-only `Array` of
+absolute path strings.
 
 ### CLI include paths
 
-The CLI supports adding include dirs using `-I`:
+The CLI supports adding include directories using `-I`:
 
 ```bash
 zuzu -I./modules app/main.zzs
 ```
-
-### Relative app layout
-
-If your script lives in an app directory, module resolution can also
-search a script-relative `lib/` tree (for example `app/lib/local`).
 
 A practical project layout:
 
@@ -166,6 +184,12 @@ my-app/
       deploy.zzm
     extras/
       formatting.zzm
+```
+
+Run it with the module root passed explicitly:
+
+```bash
+zuzu -Imy-app/lib my-app/main.zzs
 ```
 
 Then in `main.zzs`:

@@ -334,7 +334,7 @@ for ( k in keys ) {
 ### Deterministic config display (Dict)
 
 ```zzs
-let cfg := { retries: 3, mode: "quiet", color: false };
+let cfg := { retries: 3, mode: "quiet", colour: false };
 let keys := cfg.sorted_keys();
 
 for ( k in keys ) {

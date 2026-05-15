@@ -135,7 +135,7 @@ Provides SHA-family hashing functions and HMAC helpers across several bit widths
 **Exports:** `sha1`, `sha1_b64`, `sha1_hex`, `sha224`, `sha224_b64`, `sha224_hex`, `sha256`, `sha256_b64`, `sha256_hex`, `sha384`, `sha384_b64`, `sha384_hex`, `sha512`, `sha512_b64`, `sha512_hex`, `hmac_sha1`, `hmac_sha1_b64`, `hmac_sha1_hex`, `hmac_sha224`, `hmac_sha224_b64`, `hmac_sha224_hex`, `hmac_sha256`, `hmac_sha256_b64`, `hmac_sha256_hex`, `hmac_sha384`, `hmac_sha384_b64`, `hmac_sha384_hex`, `hmac_sha512`, `hmac_sha512_b64`, `hmac_sha512_hex`.
 
 ## std/dump
-Provides a structured dumper that turns Zuzu values into readable, code-like text. It supports pretty-printing, optional color output, and cycle detection safeguards.
+Provides a structured dumper that turns Zuzu values into readable, code-like text. It supports pretty-printing, optional colour output, and cycle detection safeguards.
 
 **Exports:** `Dumper`.
 

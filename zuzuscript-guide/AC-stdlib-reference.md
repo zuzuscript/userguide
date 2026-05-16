@@ -214,8 +214,10 @@ Provides configurable structured-ish logging with levels and optional timestamps
 
 ## std/mail
 Provides mail address, header, body, message parsing, date formatting, and
-message serialization helpers. It is intended for RFC-style message
-composition and parsing; delivery is handled by `std/net/smtp`.
+message serialization helpers. Mail date parsing returns `std/time` `Time`
+objects carrying the parsed fixed-offset timezone. It is intended for
+RFC-style message composition and parsing; delivery is handled by
+`std/net/smtp`.
 
 **Exports:** `Address`, `Head`, `Body`, `Message`, `Parser`,
 `Serializer`, `parse_datetime`, `format_datetime`.
@@ -362,9 +364,23 @@ Provides a ZZPath-backed template engine. It subclasses `std/template/z`'s
 **Exports:** `ZZTemplate`.
 
 ## std/time
-Provides time value and parser utilities, including format-driven parsing of date/time strings. It is the standard time abstraction for core scripts.
+Provides immutable time values, timezones, duration helpers, parsing, and
+serialization. A `Time` stores an instant as epoch seconds plus timezone
+metadata used for calendar accessors and wall-clock calculations.
 
-**Exports:** `Time`, `TimeParser`.
+`new Time(epoch?, timezone: zone?)` keeps the old epoch-only constructor and
+adds a named `timezone` argument accepting a `TimeZone`, IANA timezone name,
+or fixed offset. `with_timezone` keeps the same instant and changes the
+displayed zone; `reinterpret_timezone` keeps displayed fields and changes the
+instant. Seconds, minutes, and hours are elapsed-time operations, while days,
+weeks, months, and years are calendar operations in the object's timezone and
+return new `Time` objects.
+
+`Time.parse` accepts ISO 8601/RFC 3339 and RFC 5322 date-time text. Zone-less
+input requires an explicit timezone. The older `TimeParser` API remains for
+compatibility with format-driven parsing.
+
+**Exports:** `Time`, `TimeZone`, `Duration`, `TimeFormat`, `TimeParser`.
 
 ## std/tui
 Provides terminal UI helpers for ANSI colour, stdout writing, readline,

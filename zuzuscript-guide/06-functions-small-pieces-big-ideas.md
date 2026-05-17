@@ -47,6 +47,37 @@ A few quick reminders:
 A named function declaration creates a binding in the current scope, so
 you can call it like any other value.
 
+You can also predeclare a function name before giving it a body. This is
+useful when two functions need to call each other:
+
+```zzs
+function handle_array;
+function handle_dict;
+
+function handle_array ( value ) {
+	if ( value instanceof Dict ) {
+		return handle_dict( value );
+	}
+	return "array";
+}
+
+function handle_dict ( value ) {
+	if ( value instanceof Array ) {
+		return handle_array( value );
+	}
+	return "dict";
+}
+```
+
+After `function handle_array;`, the name is in scope, but calling it before
+the full definition is reached throws an exception. Once the definition is
+evaluated, the placeholder receives its body and behaves like an ordinary
+const-like function binding.
+
+The same predeclaration form is supported for `method name;` and
+`static method name;` inside classes and traits, though it is rarely needed
+because method lookup normally happens after the class or trait has been
+built.
 
 ## 6.2 Positional parameters: the default shape
 

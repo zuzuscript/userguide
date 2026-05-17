@@ -165,6 +165,7 @@ Notes:
 
 <function-def> ::= <async-modifier>? "function" <identifier> "(" <param-list>? ")"
 	<return-annotation>? <block>
+	| "function" <identifier> ";"
 
 <return-annotation> ::= <lambda-arrow> <type-expr>
 
@@ -227,9 +228,11 @@ Notes:
 
 <method-def> ::= <async-modifier>? "method" <identifier> "(" <param-list>? ")"
 	<return-annotation>? <block>
+	| "method" <identifier> ";"
 
 <static-method-def> ::= <async-modifier>? "static" "method" <identifier>
 	"(" <param-list>? ")" <return-annotation>? <block>
+	| "static" "method" <identifier> ";"
 
 <super-call-expr> ::= "super" "(" <arg-list>? ")"
 ```

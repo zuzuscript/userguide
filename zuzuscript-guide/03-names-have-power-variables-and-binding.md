@@ -434,33 +434,138 @@ The language makes the common case easy; you typically do not need to
 "free" values manually.
 
 
-## 3.11 Destructuring status in current implementation
+## 3.11 Declaration unpacking with keyed patterns
 
-Some languages let you write patterns like:
-
-```text
-let [ a, b ] := pair;
-let { name, age } := person;
-```
-
-As of the current Perl implementation used in this guide, declaration
-syntax centers on single identifiers (optionally typed), not full
-pattern destructuring in `let`/`const` declarations.
-
-So if you need "destructuring-like" behaviour today, use explicit access
-instead:
+When a Dict or PairList contains several named values, a `let` or
+`const` declaration can unpack selected keys into local bindings:
 
 ```zzs
-let pair := [ "Zia", 2 ];
-let name := pair[0];
-let cups := pair[1];
+let source := { host: "localhost", port: 8080 };
+let { host, port } := source;
 
-let user := { name: "Zia", team: "tooling" };
-let team := user{team};
+say host;  // "localhost"
+say port;  // 8080
 ```
 
-That is straightforward, readable, and aligned with parser/tested
-syntax.
+This is declaration unpacking. The braces form a keyed declaration
+pattern, not a Dict literal and not an assignment target. The source
+expression is evaluated once, and must produce a Dict or PairList.
+
+`let` creates mutable bindings; `const` creates non-reassignable
+bindings:
+
+```zzs
+let { host } := { host: "localhost" };
+host := "127.0.0.1";
+
+const { locked } := { locked: "fixed" };
+// locked := "changed";  // compile-time error
+```
+
+### Shorthand, aliases, and types
+
+The shorthand form uses the local name as the key:
+
+```zzs
+let { host } := { host: "example.test" };
+```
+
+Use `key: name` when the local binding should have a different name:
+
+```zzs
+let { host: alias_host } := { host: "example.test" };
+```
+
+Types work in both shorthand and alias forms:
+
+```zzs
+let data := { label: "primary", count: 3 };
+let {
+  String label,
+  count: Number typed_count,
+} := data;
+```
+
+### String keys and computed keys
+
+Keys can be ordinary identifiers, string/template keys, or parenthesized
+expressions:
+
+```zzs
+let headers := { "content-type": "text/plain", "x-id": 17 };
+let {
+  "content-type": content_type,
+  ("x-" _ "id"): request_id,
+} := headers;
+```
+
+### Defaults use `:=`
+
+An unpacked binding can provide a default with `:=`:
+
+```zzs
+let raw := { present: null };
+let {
+  missing := "fallback",
+  present := "wrong",
+  absent,
+} := raw;
+
+say missing;  // "fallback"
+say present;  // null
+say absent;   // null
+```
+
+Defaults are evaluated lazily and only when the key is absent. A present
+key whose value is `null` does not use the default. Missing keys without
+defaults bind `null`.
+
+Use `:=` for unpack pattern defaults. Do not write `key default value`
+inside a declaration pattern; `default` is the separate option-collection
+operator covered in Chapter 4.
+
+### PairList sources
+
+PairList unpacking uses the same first-value lookup behaviour as
+`PairList.get(key)`:
+
+```zzs
+let pairs := {{ item: "first", item: "second" }};
+let { item } := pairs;
+
+say item;  // "first"
+```
+
+If pair order or duplicate keys matter beyond first-value lookup, keep
+the PairList itself or use `get_all`.
+
+### Weak unpacked bindings
+
+`but weak` can be attached to an unpacked binding. It follows the same
+declaration-level weak storage rules described earlier in this chapter:
+
+```zzs
+let source := { owner: { label: "temporary" } };
+let { owner: saved but weak } := source;
+```
+
+When a binding has both a default and weak storage, the default comes
+before `but weak`:
+
+```zzs
+let empty := {};
+let fallback := { label: "fallback" };
+let { owner: saved_default := fallback but weak } := empty;
+```
+
+Declaration unpacking does not create a general assignment pattern:
+
+```zzs
+let target := { host: "localhost" };
+// { host } := target;  // invalid
+```
+
+Each local name in the pattern must be unique.
 
 
 ## 3.12 Practical patterns for healthy bindings
@@ -566,8 +671,8 @@ You now have a practical binding model for ZuzuScript (Perl runtime):
 - shadowing is local-name override in inner scope,
 - closures capture outer lexical values,
 - values live as long as they remain reachable,
-- declaration destructuring is not currently a primary `let`/`const`
-  feature in this implementation.
+- declaration unpacking binds selected Dict or PairList keys through a
+  keyed declaration pattern.
 
 In Chapter 4, we build on this with operators and expression mechanics,
 so your value and binding intuition can turn directly into precise,

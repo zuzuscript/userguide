@@ -48,7 +48,7 @@ are included too.
 | `const` | Declares a non-reassignable binding. |
 | `continue` | Continues switch execution into the next case/default. |
 | `debug` | Emits debug output when the runtime debug level allows it. |
-| `default` | Starts the fallback branch in a `switch`. |
+| `default` | Starts the fallback branch in a `switch`, and acts as the default operator between option collections. |
 | `die` | Throws an exception-style failure value. |
 | `do` | Evaluates a block as an expression. |
 | `does` | Tests whether a value composes a trait. |

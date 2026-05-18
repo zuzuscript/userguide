@@ -200,13 +200,13 @@ function not_ok ( a?, b ) {
 That ordering rule is parser-enforced in the Perl implementation.
 
 
-## 6.5 Variadic parameters and “named-style” arguments
+## 6.5 Variadic parameters, named-style arguments, and argument spread
 
 Sometimes you want to accept additional arguments.
 
 ### Positional rest collector
 
-Use `...` with a collector name:
+In a parameter list, use `...` with a collector name:
 
 ```zzs
 function add_all ( ... rest ) {
@@ -222,7 +222,8 @@ function add_all ( ... rest ) {
 say add_all( 1, 2, 3, 4 );  # 10
 ```
 
-In the Perl runtime, `rest` is an array-like value.
+In the Perl runtime, `rest` is an array-like value. This is the
+parameter-list meaning of `...`: it collects extra positional arguments.
 
 ### Named argument collection
 
@@ -230,13 +231,13 @@ ZuzuScript call syntax supports label-style arguments such as
 `key: value`. To receive these, define a `PairList` collector:
 
 ```zzs
-function describe_raccoon ( name, ... PairList opts ) {
-  return name _ " options=" _ opts.size();
+function describe_job ( name, ... PairList opts ) {
+  return name _ " options=" _ opts.length();
 }
 
-say describe_raccoon(
-  "Zia",
-  mood: "sleepy",
+say describe_job(
+  "build",
+  mode: "release",
   drink: "coffee"
 );
 ```
@@ -247,6 +248,46 @@ You can think of this as a practical named-parameter pattern:
 - function receives collected key/value pairs.
 
 It is flexible for option bags and evolving APIs.
+
+### Argument spread at call sites
+
+In a call argument list, `...expr` is argument spread. It evaluates
+`expr` and expands the resulting collection at that point in the call:
+
+```zzs
+function positional ( ... args ) {
+  return args;
+}
+
+say positional( 1, ...[ 2, 3 ], 4 );  // [ 1, 2, 3, 4 ]
+```
+
+Array spread appends positional arguments. Dict and PairList spread
+append named arguments:
+
+```zzs
+function capture ( ... PairList opts ) {
+  return opts;
+}
+
+let from_dict := capture( before: 0, ...{ alpha: 1 }, after: 2 );
+say from_dict{"alpha"};  // 1
+
+let from_pairs := capture( ...{{ tag: "one", tag: "two" }} );
+say from_pairs.get_all("tag");  // [ "one", "two" ]
+```
+
+Argument operands evaluate left-to-right, with each spread expanded in
+place. PairList spread preserves pair order and duplicate keys. Dict
+spread supplies named arguments for its entries, but code should not rely
+on Dict iteration order. Spreading any value other than Array, Dict, or
+PairList throws an exception.
+
+Keep the three `...` meanings separate:
+
+- `function f ( ... args )` collects extra positional arguments,
+- `f( ...values )` spreads a collection into a call,
+- `[ 1 ... 5 ]` is an inclusive range inside collection literals.
 
 
 ## 6.6 Return values and return types

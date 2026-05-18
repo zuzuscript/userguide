@@ -15,9 +15,14 @@ precedence to lowest precedence.
 - `?:`, `? :`, and assignment operators are parsed after the Pratt
   precedence table, so they behave as the lowest-precedence expression
   forms.
+- `default` is a left-associative binary operator at the type-aware
+  equality tier.
 - Postfix forms (call/member/index/dict access/postfix `++`/`--`) are
   parsed immediately after primaries and therefore bind tighter than all
   infix operators.
+- Argument spread is call syntax, not an infix operator. In
+  `fn(...opts default fallback)`, the spread operand is the whole
+  `opts default fallback` expression.
 
 | Level | Associativity | Operators |
 |---|---|---|
@@ -32,7 +37,7 @@ precedence to lowest precedence.
 | 7 | left-to-right | `^` |
 | 6 | left-to-right | `\|` |
 | 5 | left-to-right | `=`, `≠`, `<`, `>`, `<=`, `≤`, `>=`, `≥`, `<=>`, `≶`, `≷`, `eq`, `ne`, `gt`, `ge`, `lt`, `le`, `cmp`, `eqi`, `nei`, `gti`, `gei`, `lti`, `lei`, `cmpi`, `in`, `∈`, `∉`, `subsetof`, `⊂`, `supersetof`, `⊃`, `equivalentof`, `⊂⊃`, `instanceof`, `does`, `can`, binary `~`, `@`, `@?`, `@@` |
-| 4 | left-to-right | `==`, `≡`, `!=`, `≢` |
+| 4 | left-to-right | `==`, `≡`, `!=`, `≢`, `default` |
 | 3 | left-to-right | `and`, `⋀`, `nand`, `⊼` |
 | 2 | left-to-right | `xor`, `⊻` |
 | 1 | left-to-right | `or`, `⋁` |
@@ -51,6 +56,8 @@ Some tokens are valid in more than one role:
 - `\\` is both unary reference (prefix) and binary set difference.
 - `+` and `-` can be unary (prefix) or binary arithmetic.
 - `++` and `--` can be prefix or postfix.
+- `...` is a range operator inside collection literals, a variadic marker
+  in parameter lists, and argument spread inside call argument lists.
 
 When mixing forms, parentheses are recommended for readability.
 

@@ -326,7 +326,62 @@ For beginners, ranges are a great way to avoid noisy index-building
 loops when you just need a short sequence.
 
 
-## 4.8 Assignment operators as expressions-in-action
+## 4.8 The `default` operator for option collections
+
+The `default` operator copies a Dict or PairList, then fills in keys that
+are missing from the left-hand side.
+
+```zzs
+let opts := { size: "small" };
+let merged := opts default { size: "large", colour: "blue" };
+
+say merged{size};    // "small"
+say merged{colour};  // "blue"
+say opts.has("colour");  // false
+```
+
+The left operand must be a Dict, PairList, or `null`. The right operand
+must be a Dict or PairList. The result has the same collection type as
+the left operand, except that `null default rhs` returns a PairList:
+
+```zzs
+let pairs := {{ tag: "one" }} default {{ tag: "ignored", mode: "fast" }};
+say pairs.get_all("tag");  // [ "one" ]
+say pairs{mode};           // "fast"
+
+let from_null := null default {{ tag: "one", tag: "two" }};
+say from_null.get_all("tag");  // [ "one", "two" ]
+```
+
+When the result is a Dict, duplicate keys from a PairList default source
+collapse to one Dict entry. When the result is a PairList, missing keys
+from a PairList default source keep their pair order and duplicate
+entries. Do not rely on Dict ordering; use PairList when order or
+duplicate keys matter.
+
+`default` is left-associative. `x default null` throws because the right
+operand is not a Dict or PairList.
+
+The operator is especially useful with argument spread:
+
+```zzs
+function capture ( ... PairList opts ) {
+  return opts;
+}
+
+let opts := { size: "small" };
+let defaults := { size: "large", colour: "blue" };
+let captured := capture(... opts default defaults);
+
+say captured{size};    // "small"
+say captured{colour};  // "blue"
+```
+
+In `capture(... opts default defaults)`, `default` belongs to the spread
+operand, so the call spreads the merged option collection.
+
+
+## 4.9 Assignment operators as expressions-in-action
 
 You already saw `:=` in Chapter 3. Here are the operator forms that
 bundle a computation with assignment.
@@ -379,7 +434,7 @@ report @@ "/users/*/role" _= "-active";
 report @? "/meta/title" ?:= "Untitled";
 ```
 
-## 4.9 Prefix/postfix operators and reference expressions
+## 4.10 Prefix/postfix operators and reference expressions
 
 ### Increment/decrement
 
@@ -431,7 +486,7 @@ As with `++` and `--`, keep the path expression in parentheses when
 using unary `\` so it is parsed as the intended lvalue target.
 
 
-## 4.10 Operator precedence: who binds first?
+## 4.11 Operator precedence: who binds first?
 
 When you write a mixed expression, precedence rules determine grouping
 unless you add parentheses.
@@ -444,7 +499,7 @@ A practical high-to-low sketch for common day-to-day use:
 4. `_`
 5. set operators (`union`, `intersection`, `\`, `∖`)
 6. comparisons (`=`, `<`, `eq`, `in`, `~`, path operators)
-7. type-aware equality (`==`, `!=`, `≡`, `≢`)
+7. type-aware equality and defaults (`==`, `!=`, `≡`, `≢`, `default`)
 8. `and`, `xor`, `or` (low precedence family)
 9. ternary `? :` and short ternary `?:`
 10. assignment forms (`:=`, `~=`, `+=`, `_=`, `?:=`)
@@ -464,7 +519,7 @@ let msg := "n=" _ ( count + 1 );
 Readable code wins over clever code every time.
 
 
-## 4.11 Expressions with custom object coercion
+## 4.12 Expressions with custom object coercion
 
 Objects can hook into expression behaviour by providing methods such as
 `to_Number`, `to_String`, and `to_Boolean`.
@@ -493,7 +548,7 @@ This is a powerful extension point, but use it with restraint: people
 reading your code should still be able to predict behaviour quickly.
 
 
-## 4.12 Common expression pitfalls (and easy fixes)
+## 4.13 Common expression pitfalls (and easy fixes)
 
 ### Pitfall 1: using numeric operators for strings
 
@@ -532,7 +587,7 @@ Sets answer membership. Bags answer multiplicity. Pick based on what the
 program is trying to preserve.
 
 
-## 4.13 Mini walkthrough: Zia’s coffee task score
+## 4.14 Mini walkthrough: Zia’s coffee task score
 
 Let’s combine several operator families in one small expression pipeline.
 
@@ -558,7 +613,7 @@ This reads close to plain language:
 That is the essence of expression-driven code.
 
 
-## 4.14 What’s next
+## 4.15 What’s next
 
 You now have the operator toolbox needed for meaningful computation:
 

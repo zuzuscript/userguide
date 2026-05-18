@@ -60,16 +60,32 @@ Notes:
 	( <weak-storage-modifier>
 	| ":=" <expression> <weak-storage-modifier>?
 	)?
+	| "let" <keyed-decl-pattern> ":=" <expression>
 
 <const-decl> ::= "const" <typed-identifier>
 	( <weak-storage-modifier>
 	| ":=" <expression> <weak-storage-modifier>?
 	)?
+	| "const" <keyed-decl-pattern> ":=" <expression>
 
 <weak-storage-modifier> ::= "but" "weak"
 
 <typed-identifier> ::= <identifier>
 	| <identifier> <identifier>
+
+<keyed-decl-pattern> ::= "{" <keyed-decl-entry-list>? "}"
+
+<keyed-decl-entry-list> ::= <keyed-decl-entry>
+	( "," <keyed-decl-entry> )* ","?
+
+<keyed-decl-entry> ::= <typed-identifier>
+	( ":=" <expression> )? <weak-storage-modifier>?
+	| <dict-key-expr> ":" <typed-identifier>
+	( ":=" <expression> )? <weak-storage-modifier>?
+
+; A shorthand keyed declaration entry uses the local identifier as the key.
+; Defaults use ":=", run only when the key is absent, and are not written
+; with the "default" operator syntax.
 
 <assignment-stmt> ::= <assignable> ":=" <expression> <weak-write-modifier>?
 	| <assignable> <compound-assign-op> <expression>
@@ -259,6 +275,8 @@ Canonical async static methods use `async static method`. Perl accepts
 	( <weak-storage-modifier>
 	| ":=" <expression> <weak-storage-modifier>?
 	)?
+	| "let" <keyed-decl-pattern> ":=" <expression>
+	| "const" <keyed-decl-pattern> ":=" <expression>
 
 <try-catch-expr> ::= "try" <block> <catch-clause>+
 
@@ -293,6 +311,7 @@ Canonical async static methods use `async static method`. Perl accepts
 	| "subsetof" | "⊂"
 	| "supersetof" | "⊃"
 	| "equivalentof" | "⊂⊃"
+	| "default"
 	| "\\" | "∖"
 	| "instanceof" | "does" | "can"
 	| "@" | "@?" | "@@"
@@ -337,10 +356,18 @@ Canonical async static methods use `async static method`. Perl accepts
 
 <incdec-suffix> ::= "++" | "--"
 
-<arg-list> ::= <named-arg>
+<arg-list> ::= <arg-item> ( "," <arg-item> )* ","?
+
+<arg-item> ::= <named-arg>
+	| <spread-arg>
 	| <expression>
-	| <arg-list> "," <named-arg>
-	| <arg-list> "," <expression>
+
+<spread-arg> ::= "..." <expression>
+
+; In call argument lists, "..." is argument spread. Array spreads append
+; positional arguments. Dict and PairList spreads append named arguments.
+; PairList preserves pair order and duplicate keys; Dict ordering is not
+; part of the language contract.
 
 <named-arg> ::= <identifier> ":" <expression>
 	| <string-literal> ":" <expression>
@@ -489,6 +516,7 @@ Canonical async static methods use `async static method`. Perl accepts
 "subsetof" "⊂"
 "supersetof" "⊃"
 "equivalentof" "⊂⊃"
+"default"
 ```
 ### 8.7 Mutation operators
 
@@ -529,6 +557,7 @@ The following are reserved and cannot be used as identifiers:
 "async" "await" "spawn"
 "extends" "with" "but"
 "if" "else" "unless" "while" "for" "in" "return" "next" "continue" "last"
+"switch" "case" "default"
 "new" "self" "super" "fn"
 "null" "true" "false"
 "and" "or" "xor" "nand" "not"

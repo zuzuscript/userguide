@@ -35,6 +35,7 @@ weakness from a previous weak entry.
 | `shift` | none | `Any` or `null` | Removes and returns the first element, or `null` if empty. |
 | `length`, `count` | none | `Number` | Returns the number of elements. |
 | `empty`, `is_empty` | none | `Boolean` | Returns whether the array has no elements. |
+| `copy` | none | `Array` | Returns a shallow copy with independent outer storage and the same element values. |
 | `get` | `index`, optional `default` | `Any` | Returns the element at `index`, or `default`/`null` if out of range. |
 | `set` | `index`, `value` | `Array` | Stores `value` at `index` and returns the same array. |
 | `set_weak` | `index`, `value` | `Array` | Stores `value` at `index` through weak-storage rules and returns the same array. |
@@ -74,6 +75,7 @@ weakness from a previous weak entry.
 | `length` | none | `Number` | Returns the total number of items, including duplicates. |
 | `count` | optional `value` | `Number` | With no argument, returns the total item count. With a value, returns how many matching items exist. |
 | `empty` | none | `Boolean` | Returns whether the bag has no items. |
+| `copy` | none | `Bag` | Returns a shallow copy with independent outer storage and the same item values. |
 | `clear` | none | `Bag` | Removes all items and returns the same bag. |
 | `contains` | `value` | `Boolean` | Returns whether the bag contains a matching value. |
 | `to_Array` | none | `Array` | Returns an array containing the bag values. |
@@ -101,6 +103,7 @@ weakness from a previous weak entry.
 | `remove` | `value` | `Set` | Removes a matching value and returns the same set. |
 | `length`, `count` | none | `Number` | Returns the number of distinct items. |
 | `empty`, `is_empty` | none | `Boolean` | Returns whether the set has no items. |
+| `copy` | none | `Set` | Returns a shallow copy with independent outer storage and the same item values. |
 | `clear` | none | `Set` | Removes all items and returns the same set. |
 | `contains` | `value` | `Boolean` | Returns whether the set contains a matching value. |
 | `to_Array` | none | `Array` | Returns an array containing the set items. |
@@ -130,26 +133,27 @@ weakness from a previous weak entry.
 | Method | Parameters | Returns | Description |
 | --- | --- | --- | --- |
 | `keys` | none | `Set` | Returns a set of keys. |
-| `values` | none | `Bag` | Returns a bag of values ordered by sorted key. |
-| `enumerate` | none | `Bag` | Returns a bag of pair values ordered by sorted key. |
+| `values` | none | `Bag` | Returns a bag of values. |
+| `enumerate` | none | `Bag` | Returns a bag of pair values. |
 | `has`, `exists` | `key` | `Boolean` | Returns whether the key exists. |
 | `defined` | `key` | `Boolean` | Returns whether the key exists and its value is not `null`. |
 | `get` | `key`, optional `default` | `Any` | Returns the value for `key`, or `default`/`null` if absent. |
+| `copy` | none | `Dict` | Returns a shallow copy with independent outer storage and the same key/value entries. |
 | `add` | `key`, `value` or array-like pair arguments | `Dict` | Adds or replaces entries and returns the same dict. |
 | `add_weak` | `key`, `value` | `Dict` | Adds or replaces one entry through weak-storage rules and returns the same dict. |
 | `set` | `key`, `value` | `Dict` | Sets one entry and returns the same dict. |
 | `set_weak` | `key`, `value` | `Dict` | Sets one entry through weak-storage rules and returns the same dict. |
-| `kv` | none | `Array` | Returns `[ key1, value1, key2, value2, ... ]` in sorted-key order. |
+| `kv` | none | `Array` | Returns `[ key1, value1, key2, value2, ... ]`; do not rely on Dict key order. |
 | `sorted_keys` | none | `Array` | Returns the sorted keys as an array. |
 | `remove` | `key` or predicate callback | `Dict` | Removes one key, or removes each pair for which the callback is truthy, then returns the same dict. |
 | `length`, `count` | none | `Number` | Returns the number of entries. |
 | `empty` | none | `Boolean` | Returns whether the dict has no entries. |
 | `clear` | none | `Dict` | Removes all entries and returns the same dict. |
-| `to_Array` | none | `Array` | Returns an array of pair values ordered by sorted key. |
-| `to_Iterator` | none | `Function` | Returns an iterator function over keys in sorted order. |
+| `to_Array` | none | `Array` | Returns an array of pair values; do not rely on Dict key order. |
+| `to_Iterator` | none | `Function` | Returns an iterator function over keys. |
 | `for_each_pair` | mapper callback | `Dict` | Calls the callback for each pair value and returns the same dict. |
-| `for_each_key` | mapper callback | `Dict` | Calls the callback for each key in sorted order and returns the same dict. |
-| `for_each_value` | mapper callback | `Dict` | Calls the callback for each value in sorted-key order and returns the same dict. |
+| `for_each_key` | mapper callback | `Dict` | Calls the callback for each key and returns the same dict. |
+| `for_each_value` | mapper callback | `Dict` | Calls the callback for each value and returns the same dict. |
 
 ## PairList
 
@@ -162,6 +166,7 @@ weakness from a previous weak entry.
 | `defined` | `key` | `Boolean` | Returns whether any pair with that key has a non-`null` value. |
 | `get` | `key`, optional `default` | `Any` | Returns the first value for `key`, or `default`/`null` if absent. |
 | `get_all`, `all` | `key` | `Array` | Returns all values for `key` in pairlist order. |
+| `copy` | none | `PairList` | Returns a shallow copy with independent outer storage, preserving pair order and duplicate keys. |
 | `add` | `key`, `value` or pair-like arguments | `PairList` | Appends one or more pairs and returns the same pairlist. |
 | `add_weak` | `key`, `value` | `PairList` | Appends one pair through weak-storage rules and returns the same pairlist. |
 | `set` | `key`, `value` | `PairList` | Alias-like append operation that adds a new pair and returns the same pairlist. |

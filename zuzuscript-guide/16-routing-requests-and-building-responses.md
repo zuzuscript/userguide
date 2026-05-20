@@ -164,6 +164,7 @@ Useful methods include:
 - `body(value?)` and `content(value?)`,
 - `render(template, data := {})`,
 - `render_json(data)`,
+- `session(value?)`,
 - `content_type(value?)`,
 - `content_length(value?)`,
 - `content_encoding(value?)`,
@@ -184,6 +185,42 @@ res.header( "Content-Type", "text/plain; charset=UTF-8" );
 res.set_cookie( "session", token, { Path: "/", HttpOnly: true } );
 return res;
 ```
+
+`std/web` also defines session contracts for applications which want
+portable server-side sessions. Configure a handler once, read the
+session from the request, and pass the finalized session to the
+response:
+
+```zzs
+from std/web import Request, Response;
+from std/web/session import FileSessionHandler;
+from std/io import Path;
+
+Request.set_session_handler(
+	new FileSessionHandler(
+		dir:     new Path( path: "/tmp/zsessions" ),
+		secret:  "change-me",
+		max_age: 6 * 60 * 60,
+	),
+);
+
+function __request__ ( env ) {
+	let req := new Request( env: env );
+	let sess := req.session();
+	sess{data}.set( "seen", sess{data}.get( "seen", 0 ) + 1 );
+	return new Response(
+		session: sess.finalize(),
+		body: [ "seen ", sess{data}{seen}, "\n" ],
+	);
+}
+```
+
+`SessionHandler` and `Session` live in `std/web`, because `Request` and
+`Response` enforce those contracts. `std/web/session` imports `std/web`
+and provides `FileSessionHandler` and `DbSessionHandler`. The default
+cookie is named `zzsession`; it stores only a signed opaque id. The
+server-side session data is trusted marshalled storage, not encrypted or
+separately signed.
 
 `redirect` sets the status and `Location` header:
 
@@ -387,6 +424,25 @@ and caches the returned class for later requests.
 
 That keeps application startup cheap and avoids loading controllers for
 routes that are never used.
+
+The standard library uses the same lazy-controller shape for static
+files. `std/web/static` reads its configuration from route defaults, so
+the class can be shared by many routes:
+
+```zzs
+from std/io import Path;
+
+routes.get("/img/*path").to(
+	controller: "std/web/static#StaticHandler",
+	action: "handle",
+	root: new Path("public/img"),
+);
+```
+
+`StaticHandler` serves `GET` and `HEAD`, rejects path traversal, sets
+content type and cache validator headers, and serves directory index
+files such as `index.html`. Directory listings are disabled by default;
+enable them per route with `directory_indexes: true`.
 
 
 ## 16.8 Route Names and URL Rendering

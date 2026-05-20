@@ -399,9 +399,28 @@ Provides UUID generation helpers for both textual and binary forms. It is intend
 ## std/web
 Provides request, response, route, and route collection objects for simple
 web applications. It includes parameter parsing, cookies, rendering
-helpers, route matching, and dispatch support.
+helpers, route matching, dispatch support, and the public session
+contracts used by pluggable session handlers.
 
-**Exports:** `Request`, `Response`, `RouteMatch`, `Route`, `Routes`.
+**Exports:** `Request`, `Response`, `SessionHandler`, `Session`,
+`RouteMatch`, `Route`, `Routes`.
+
+## std/web/session
+Provides file and database backed server-side session handlers for
+`std/web`. Browser cookies contain a signed opaque session id; session
+data is stored server-side as trusted marshalled data. Custom storage or
+stronger storage protection can be provided by implementing the
+`std/web` `SessionHandler` and `Session` contracts.
+
+**Exports:** `Session`, `FileSessionHandler`, `DbSessionHandler`.
+
+## std/web/static
+Provides a lazy-loadable static file controller for `std/web` routes.
+It serves `GET` and `HEAD`, rejects traversal, sets content type and
+cache validator headers, supports directory index files, and can enable
+simple directory listings per route.
+
+**Exports:** `StaticHandler`.
 
 ## std/worker
 Provides isolated workers for shared-nothing parallel work. Worker

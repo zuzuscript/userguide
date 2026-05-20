@@ -10,11 +10,13 @@ precedence to lowest precedence.
 - Higher rows bind tighter than lower rows.
 - Most binary operators are left-associative.
 - `**` is right-associative.
+- `▷` is left-associative; `◁` is right-associative. Their ASCII-safe
+  aliases are `|>` and `<|`. The Unicode forms are canonical.
 - `⊤` and `⊥` are boolean literals, not operators, so they do not
   appear in the precedence table.
-- `?:`, `? :`, and assignment operators are parsed after the Pratt
-  precedence table, so they behave as the lowest-precedence expression
-  forms.
+- `?:`, `? :`, chain operators, and assignment operators are parsed
+  after the main Pratt precedence table. Chain operators bind looser
+  than ternary expressions and tighter than assignment.
 - `default` is a left-associative binary operator at the type-aware
   equality tier.
 - Postfix forms (call/member/index/dict access/postfix `++`/`--`) are
@@ -42,6 +44,7 @@ precedence to lowest precedence.
 | 2 | left-to-right | `xor`, `⊻` |
 | 1 | left-to-right | `or`, `⋁` |
 | Ternary | right-to-left grouping in practice | `? :`, `?:` |
+| Chain | by direction | `▷`, `◁`, `&#124;>`, `<&#124;` |
 | Assignment | right-to-left grouping in practice | `:=`, `~=`, `+=`, `-=`, `*=`, `×=`, `/=`, `÷=`, `**=`, `_=`, `?:=` |
 
 ## Detailed table

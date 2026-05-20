@@ -381,7 +381,63 @@ In `capture(... opts default defaults)`, `default` belongs to the spread
 operand, so the call spreads the merged option collection.
 
 
-## 4.9 Assignment operators as expressions-in-action
+## 4.9 Chain operators and `^^`
+
+Chain operators let you feed one expression into a following expression
+without naming an intermediate binding. The primary spellings are the
+Unicode triangles:
+
+```zzs
+4
+	▷ 1 + ( 2 × ^^ )
+	▷ say( ^^ + ^^ );
+```
+
+`▷` evaluates the expression on its left first, binds that value to the
+temporary placeholder `^^`, then evaluates the expression on its right.
+The value of the whole chain is the right-hand expression.
+
+`◁` works in the opposite direction: it evaluates the expression on its
+right first, binds that value to `^^`, then evaluates the expression on
+its left.
+
+```zzs
+say( 4 ▷ ^^ + 1 );   // 5
+say( ^^ + 1 ◁ 4 );   // 5
+```
+
+ASCII-safe aliases are available for environments where Unicode entry is
+awkward: `|>` is an alias for `▷`, and `<|` is an alias for `◁`. The
+Unicode forms are the canonical spellings used by generated source such
+as `zuzu-rust --dump-zuzu`.
+
+`^^` is not a normal user binding name. It is only introduced by a chain
+operator, is constant inside the chained expression, and is otherwise an
+undeclared identifier at runtime. Functions created inside the chained
+expression capture the current placeholder value.
+
+Chains of the same direction associate by direction: `▷` chains
+left-to-right, while `◁` chains right-to-left. Mixing directions at the
+same unparenthesized chain level is a syntax error; add parentheses when
+you intentionally want both directions in one expression.
+
+Chain operators can really clear up nested expressions.
+
+```zzs
+do_something( foo( 1, bar( baz( myvar[2] ) ) ) );
+
+// becomes:
+myvar[2]
+  ▷ baz( ^^ )
+  ▷ bar( ^^ )
+  ▷ foo( 1, ^^ )
+  ▷ do_something( ^^ );
+```
+
+Think of them like the Unix pipe operators, allowing you to chain together
+simple commands into something more powerful.
+
+## 4.10 Assignment operators as expressions-in-action
 
 You already saw `:=` in Chapter 3. Here are the operator forms that
 bundle a computation with assignment.
@@ -434,7 +490,7 @@ report @@ "/users/*/role" _= "-active";
 report @? "/meta/title" ?:= "Untitled";
 ```
 
-## 4.10 Prefix/postfix operators and reference expressions
+## 4.11 Prefix/postfix operators and reference expressions
 
 ### Increment/decrement
 
@@ -486,7 +542,7 @@ As with `++` and `--`, keep the path expression in parentheses when
 using unary `\` so it is parsed as the intended lvalue target.
 
 
-## 4.11 Operator precedence: who binds first?
+## 4.12 Operator precedence: who binds first?
 
 When you write a mixed expression, precedence rules determine grouping
 unless you add parentheses.
@@ -502,10 +558,11 @@ A practical high-to-low sketch for common day-to-day use:
 7. type-aware equality and defaults (`==`, `!=`, `≡`, `≢`, `default`)
 8. `and`, `xor`, `or` (low precedence family)
 9. ternary `? :` and short ternary `?:`
-10. assignment forms (`:=`, `~=`, `+=`, `_=`, `?:=`)
+10. chain operators (`▷`, `◁`, `|>`, `<|`)
+11. assignment forms (`:=`, `~=`, `+=`, `_=`, `?:=`)
 
-`**` is right-associative. Most other binary operators are left-
-associative.
+`**` is right-associative. Chain operators associate in their direction.
+Most other binary operators are left-associative.
 
 ### Parentheses are a kindness
 

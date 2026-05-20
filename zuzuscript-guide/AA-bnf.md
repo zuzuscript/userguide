@@ -265,6 +265,7 @@ Canonical async static methods use `async static method`. Perl accepts
 	| <await-expr>
 	| <spawn-expr>
 	| <assign-expr>
+	| <chain-expr>
 	| <ternary-expr>
 
 <let-expr> ::= "let" <typed-identifier>
@@ -288,6 +289,18 @@ Canonical async static methods use `async static method`. Perl accepts
 
 <assign-expr> ::= <assignable> <assign-op> <expression>
 	| <assignable> "~=" <expression> <lambda-arrow> <expression>
+
+<chain-expr> ::= <ternary-expr> <right-chain-op> <ternary-expr>
+	( <right-chain-op> <ternary-expr> )*
+	| <ternary-expr> <left-chain-op> <chain-expr>
+
+<right-chain-op> ::= "▷" | "|>"
+
+<left-chain-op> ::= "◁" | "<|"
+
+; Mixed chain directions at the same unparenthesized chain level are a
+; syntax error. Parenthesize a nested chain when both directions are
+; intentional.
 
 <ternary-expr> ::= <binary-expr>
 	( "?" <expression> ":" <expression>

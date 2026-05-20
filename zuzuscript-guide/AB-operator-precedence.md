@@ -44,7 +44,7 @@ precedence to lowest precedence.
 | 2 | left-to-right | `xor`, `⊻` |
 | 1 | left-to-right | `or`, `⋁` |
 | Ternary | right-to-left grouping in practice | `? :`, `?:` |
-| Chain | by direction | `▷`, `◁`, `&#124;>`, `<&#124;` |
+| Chain | by direction | `▷`, `◁`, `\|>`, `<\|` |
 | Assignment | right-to-left grouping in practice | `:=`, `~=`, `+=`, `-=`, `*=`, `×=`, `/=`, `÷=`, `**=`, `_=`, `?:=` |
 
 ## Detailed table

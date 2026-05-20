@@ -29,7 +29,7 @@ precedence to lowest precedence.
 | Level | Associativity | Operators |
 |---|---|---|
 | Postfix | left-to-right chaining | `(...)` (call), `.name`, `.(expr)(...)`, `[index]`, `[start:length]`, `{key}`, postfix `++`, postfix `--` |
-| Prefix | right-to-left nesting | unary `+`, unary `-`, `!`, `¬`, unary `~`, unary `√`, unary `\\` (reference), `not`, `abs`, `sqrt`, `floor`, `ceil`, `round`, `int`, `uc`, `lc`, `length`, `typeof`, prefix `++`, prefix `--` |
+| Prefix | right-to-left nesting | unary `+`, unary `-`, `!`, `¬`, unary `~`, unary `√`, `⌊...⌋`, `⌈...⌉`, unary `\\` (reference), `not`, `abs`, `sqrt`, `floor`, `ceil`, `round`, `int`, `uc`, `lc`, `length`, `typeof`, prefix `++`, prefix `--` |
 | 13 | right-to-left | `**` |
 | 12 | left-to-right | `*`, `/`, `×`, `÷`, `mod` |
 | 11 | left-to-right | `+`, `-` |

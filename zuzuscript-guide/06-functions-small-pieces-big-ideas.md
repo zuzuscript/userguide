@@ -392,6 +392,17 @@ let doubled := nums.map( fn x -> x * 2 );
 say doubled;
 ```
 
+For the shortest single-argument callbacks, start with an arrow. This
+creates a lambda whose optional argument is available as `^^`:
+
+```zzs
+let plus_two := -> ^^ + 2;
+let tripled := nums.map( → ^^ * 3 );
+```
+
+The `^^` parameter is implicit in the leading-arrow form. It is not valid
+in an explicit `fn` parameter list.
+
 You can also use block-like side effects when collection APIs expect a
 callback:
 

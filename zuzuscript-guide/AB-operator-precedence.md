@@ -25,6 +25,8 @@ precedence to lowest precedence.
 - Argument spread is call syntax, not an infix operator. In
   `fn(...opts default fallback)`, the spread operand is the whole
   `opts default fallback` expression.
+- At expression start, `->` and `→` begin a leading-arrow lambda. In
+  infix position, `->` remains the existing comparison-level operator.
 
 | Level | Associativity | Operators |
 |---|---|---|

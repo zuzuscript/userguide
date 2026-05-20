@@ -193,6 +193,24 @@ for ( const item in [ 4, 5 ] ) {
 `const` is nice when you want to guarantee no reassignment of the loop
 variable inside the body.
 
+When you do not need to name the item, omit the `in` part. The loop binds
+the current item to the constant placeholder `^^`:
+
+```zzs
+for ( [ "red", "green", "blue" ] ) {
+  say ^^;
+}
+```
+
+The same placeholder is available in postfix `for` statements:
+
+```zzs
+say ^^ for [ "red", "green", "blue" ];
+```
+
+Postfix `for` repeats one simple statement. Use the block form when you
+need an `else` block or several statements.
+
 ### `for ... else` for empty-iteration handling
 
 A handy feature in the Perl implementation: `for` supports an `else`

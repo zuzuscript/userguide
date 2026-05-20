@@ -37,6 +37,7 @@ Notes:
 	| <assignment-stmt>
 	| <expr-stmt>
 	| <postfix-conditional-stmt>
+	| <postfix-for-stmt>
 
 <block> ::= "{" <statement-list> "}"
 
@@ -44,6 +45,8 @@ Notes:
 
 <postfix-conditional-stmt> ::= <simple-statement> "if" <expression>
 	| <simple-statement> "unless" <expression>
+
+<postfix-for-stmt> ::= <simple-statement> "for" <expression>
 
 <simple-statement> ::= <expr-stmt>
 	| <assignment-stmt>
@@ -123,6 +126,8 @@ Notes:
 <while-stmt> ::= "while" "(" <expression> ")" <block>
 
 <for-stmt> ::= "for" "(" ( "let" | "const" )? <identifier> "in" <expression> ")" <block>
+	( "else" <block> )?
+	| "for" "(" <expression> ")" <block>
 	( "else" <block> )?
 
 <switch-stmt> ::= "switch" "(" <expression> ( ":" <switch-operator> )? ")"
@@ -209,12 +214,16 @@ Notes:
 	| <type-expr> <identifier>
 
 <lambda-expr> ::= <async-modifier>? "fn" <lambda-params> <lambda-arrow> <expression>
+	| <lambda-arrow> <expression>
 	| <async-modifier>? "function" "(" <param-list>? ")"
 		<return-annotation>? <block>
 
 <lambda-params> ::= <identifier>
 	| <type-expr> <identifier>
 	| "(" <param-list>? ")"
+
+; The placeholder "^^" is not an <identifier> in explicit parameter
+; lists. Leading-arrow lambdas introduce it implicitly.
 
 <lambda-arrow> ::= "->" | "→"
 

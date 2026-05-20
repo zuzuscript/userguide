@@ -411,10 +411,12 @@ awkward: `|>` is an alias for `▷`, and `<|` is an alias for `◁`. The
 Unicode forms are the canonical spellings used by generated source such
 as `zuzu-rust --dump-zuzu`.
 
-`^^` is not a normal user binding name. It is only introduced by a chain
-operator, is constant inside the chained expression, and is otherwise an
-undeclared identifier at runtime. Functions created inside the chained
-expression capture the current placeholder value.
+`^^` is not a normal user binding name. It is introduced by chain
+operators, bare `for` loops, postfix `for`, and leading-arrow lambdas.
+In chain expressions it is constant inside the chained expression, and is
+otherwise undeclared unless one of those forms introduces it. Functions
+created inside the chained expression capture the current placeholder
+value.
 
 Chains of the same direction associate by direction: `▷` chains
 left-to-right, while `◁` chains right-to-left. Mixing directions at the

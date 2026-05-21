@@ -1,6 +1,6 @@
 # Chapter 2: Math is Math
 
-<img src="https://zuzulang.org/img/zia-mim.png" alt="Why would they change math?" class="w-50 float-end d-none d-lg-block ms-3 mb-3" />
+<img src="https://zuzulang.org/img/zia-mim.png" alt="Why would they change math?" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
 Almost every non-trivial program you write will need to deal with numbers, so
 numbers are a great place to start learning about ZuzuScript.
@@ -184,7 +184,7 @@ say y;  // says 3
 ```
 
 
-## 2.4 Numeric comparison operators
+## 2.3 Numeric comparison operators
 
 The operators we have looked at so far take one or two numbers and give you
 a result which is also a number. The result of `3 + 5` is `8`. Comparison

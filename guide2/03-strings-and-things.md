@@ -40,9 +40,9 @@ let str := "String with a quote mark \" inside the string";
 - `\xHH` where H is a hexadecimal digit is a binary octet.
 - `\uHHHH` where H is a hexadecimal digit is a Unicode character.
 
-The only characters which usually *need* to be escaped are backslash and
-the closing quote character. But it may help clarity if you escape others
-too: especially carriage return, new line, tab, and any surprising-looking
+The only characters which usually *need* to be escaped are backslash, carriage
+returns, new lines, and the closing quote character. But it may help clarity
+if you escape others too: especially tab and any surprising-looking
 unicode characters.
 
 

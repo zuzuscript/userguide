@@ -4,7 +4,7 @@
 
 Collection types are how ZuzuScript keeps track of related values. The
 two collection types you'll be using all the time are `Array` and `Dict`,
-but ZuzuScript has a few more built-in collection types can can be useful.
+but ZuzuScript has a few more built-in collection types can also be useful.
 
 
 ## 4.1 Arrays

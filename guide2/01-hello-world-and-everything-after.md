@@ -146,6 +146,10 @@ Excellent. You have crossed the first bridge.
 
 ### A slightly less traditional hello
 
+ZuzuScript's mascot is Zia, the caffeine-fuelled raccoon.
+
+<img src="https://zuzulang.org/img/zia-sleeping.png" alt="Zia sleeping. Wake up!" class="img-fluid my-2" />
+
 Now let us give Zia a line:
 
 ```zzs
@@ -465,16 +469,6 @@ A recommended rhythm:
 5. Fix it.
 
 That "change + break + fix" loop is where the learning sticks.
-
-If Zia examples are not your style, swap them for your domain:
-
-- server logs,
-- inventory data,
-- CI output,
-- API payloads,
-- files on disk.
-
-The syntax lessons carry over directly.
 
 
 ## 1.10 Tiny practice exercises

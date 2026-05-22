@@ -1,6 +1,6 @@
 # Chapter 3: Strings and Things
 
-<img src="https://zuzulang.org/img/zia-strings.png" alt="All tangled up!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
+<img src="https://zuzulang.org/img/zia-strings.jpeg" alt="All tangled up!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
 Strings can be thought of as pieces of text or collections of bytes. In fact,
 these two ways of thinking of strings are the reason ZuzuScript has not one,
@@ -93,7 +93,8 @@ when dealing with encrypting, decrypting, and signing data.
 
 ZuzuScript borrows the idea of template literals from JavaScript. They
 use backticks as their quote marks, and within them you can use `${ ... }`
-to insert a ZuzuScript expression.
+to insert a ZuzuScript expression. We saw these used in Chapter 1, but
+in case you've forgotten…
 
 ```zzs
 let product_id  := 144;
@@ -130,6 +131,8 @@ let webpage := ```
 
 say webpage;
 ```
+
+Template literals always result in a `String`, not a `BinaryString`.
 
 
 ## 3.4 String operators
@@ -340,3 +343,21 @@ if ( starts_with( username, "z" ) ) {
 	}
 }
 ```
+
+The `std/string` documentation has lots more information.
+
+## 3.9 Recap
+
+In this chapter we learnt about:
+
+- the `String` and `BinaryString` datatypes
+- escaping and multi-line strings
+- template literals
+- string operators (like `_` and `length`)
+- string comparison operators (like `eq`, `gt`, and `cmp`)
+- case-insensitive string comparison operators (like `eqi`, `gti`, and `cmpi`)
+- string indices and slices
+- the `std/string` module
+
+It's useful to be able to work with a number or a string, but even more
+useful when you can work on a whole collection of them.

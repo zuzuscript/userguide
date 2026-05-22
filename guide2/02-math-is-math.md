@@ -1,6 +1,6 @@
 # Chapter 2: Math is Math
 
-<img src="https://zuzulang.org/img/zia-mim.png" alt="Why would they change math?" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
+<img src="https://zuzulang.org/img/zia-mim.jpeg" alt="Why would they change math?" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
 Almost every non-trivial program you write will need to deal with numbers, so
 numbers are a great place to start learning about ZuzuScript.
@@ -181,6 +181,28 @@ say x;  // says 2
 
 let y:= ceil( 1.8 + 0.5 ); // fake circumfix ceil
 say y;  // says 3
+```
+
+### Expressions
+
+The examples above illustrate something important. Although we've been
+talking about operators being between two numbers, or being a prefix or
+suffix for a number, in reality they operate on *expressions*.
+
+In `ceil( 1.8 + 0.5 )`, the `ceil` doesn't just apply to the number `1.8`
+but to the result of the whole expression `1.8 + 0.5`.
+
+An expression is anything that evaluates to a value. Expressions can
+be combined almost infinitely.
+
+```zzs
+let a := ( 1 + 2 ) × 10;  // 30
+let b := 1 + ( 2 × 10 );  // 21
+
+// also 21, because times is higher precedence than plus.
+let c := 1 + 2 × 10;
+
+let d := 2 × ( 1 + 2 × 10 ) + 10;  // 52
 ```
 
 
@@ -395,6 +417,7 @@ Now we've learnt about:
 - the `Number` datatype and what data types are
 - that variables can be typed (`let Number x := 1`)
 - mathematical operators (like `+`, `×`, and `floor`)
+- what expressions are
 - numeric comparison operators (like `=`, `>`, and `<=>`)
 - the difference between unary prefix, unary suffix, binary infix, and circumfix operators
 - how ZuzuScript operators coerce things

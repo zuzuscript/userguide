@@ -55,7 +55,7 @@ if ( is_admin ) {
 
 There are a few operators for working with booleans
 
-```
+```zzs
 // NOT
 ¬ a;       // The opposite of a
 not a;     // Same, but easier to type

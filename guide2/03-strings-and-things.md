@@ -53,12 +53,12 @@ If you have a long, multi-line string, you can use tripled double-quotes.
 ```zzs
 let webpage := """
 <html lang="en">
-  <head>
-    <title>Hello world</title>
-  </head>
-  <body>
-    <p>Zia says hello!</p>
-  </body>
+	<head>
+		<title>Hello world</title>
+	</head>
+	<body>
+		<p>Zia says hello!</p>
+	</body>
 </html>
 """;
 
@@ -114,19 +114,19 @@ Template literals have a multiline form too.
 
 ```zzs
 let data := {
-        lang:    "en",
-        title:   "Hello World",
-        content: "Zia says hello.",
+	lang:    "en",
+	title:   "Hello World",
+	content: "Zia says hello.",
 };
 
 let webpage := ```
 <html lang="${ data{lang} }">
-  <head>
-    <title>${ data{title} }</title>
-  </head>
-  <body>
-    <p>${ data{content} }</p>
-  </body>
+	<head>
+		<title>${ data{title} }</title>
+	</head>
+	<body>
+		<p>${ data{content} }</p>
+	</body>
 </html>```;
 
 say webpage;

@@ -148,7 +148,7 @@ Excellent. You have crossed the first bridge.
 
 ZuzuScript's mascot is Zia, the caffeine-fuelled raccoon.
 
-<img src="https://zuzulang.org/img/zia-sleeping.png" alt="Zia sleeping. Wake up!" class="img-fluid my-2" />
+<img src="https://zuzulang.org/img/zia-sleeping.png" alt="Zia sleeping. Wake up!" class="img-fluid my-2 w-25" />
 
 Now let us give Zia a line:
 

@@ -11,14 +11,14 @@
 11: Regexp
 12: Paths
 13: Chains
-IO, Files, and directories with JSON, XML, etc
-Proc
-Command line and Getopt
-Zuzuzoo and test/more
-Databases and CSV
-Web (client)
-Web (server raw)
-Web (server high level)
-Concurrency
-GUIs
-Crypto
+14: Concurrency, std/task, and std/worker
+15: IO, Files, and directories with JSON, XML, etc
+16: Proc
+17: Command line and Getopt
+18: Zuzuzoo and test/more
+19: Databases and CSV
+20: Web (client)
+21: Web (server raw)
+22: Web (server high level)
+23: GUIs
+24: Crypto

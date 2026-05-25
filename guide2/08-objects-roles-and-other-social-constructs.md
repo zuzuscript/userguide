@@ -677,7 +677,7 @@ Why this is a solid default architecture:
 
 Zia approves this architecture with a sleepy nod.
 
-<img src="https://zuzulang.org/img/zia-pbjection.jpeg" alt="Objection!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
+<img src="https://zuzulang.org/img/zia-objection.jpeg" alt="Objection!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
 
 ## 8.15 What comes next

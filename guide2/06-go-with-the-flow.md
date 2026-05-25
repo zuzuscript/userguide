@@ -115,6 +115,28 @@ declared by `let` and stays visible until the end of its scope, marked with
 `}`. Outside that scope, it is no longer visible and trying to access the
 variable by name is an error.
 
+Names defined in "higher level" scopes are still accessible.
+
+```zzs
+{
+	let mynum := 4;
+	
+	{
+		let othernum := 1;
+
+		// In this scope, both othernum and mynum are visible
+		say othernum + mynum;
+	}
+
+	// Here othernum has gone out of scope, but mynum is
+	// still visible.
+}
+
+// And here neither is visible.
+```
+
+The whole file is the "highest level" scope.
+
 ZuzuScript's idea of variable scoping roughly matches Perl, Raku,
 modern JavaScript, Rust, Swift, Go, and Lua. This is different from the
 scoping rules used by older JavaScript (`var`) and Python, where variables
@@ -264,7 +286,7 @@ loop, the postfix `for` combined with `^^` is quite readable.
 
 The `for` keyword supports an `else` block like `if` does:
 
-```
+```zzs
 let my_numbers := [];
 let sum := 0;
 

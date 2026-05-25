@@ -1,9 +1,9 @@
-
-
-
-
-
-
+1: Intro
+2: Maths / Numbers
+3: Strings
+4: Collections
+5: Booleans and Null
+6: Flow control
 7: Functions
 8: Classes, Methods, Objects, and Traits
 9: Exceptions and Results

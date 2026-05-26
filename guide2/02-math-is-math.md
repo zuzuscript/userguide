@@ -101,6 +101,26 @@ a ** b;      // Exponention ("to the power of")
 a mod b;     // Modulo arithmetic (remainder after division)
 ```
 
+### Numeric assignment operators
+
+If you want to update a variable using its current value, you can combine
+a mathematical operator with assignment.
+
+```zzs
+let score := 10;
+
+score += 5;     // same as score := score + 5
+score -= 2;     // same as score := score - 2
+score *= 3;     // same as score := score * 3
+score ×= 2;     // same as score := score × 2
+score /= 4;     // same as score := score / 4
+score ÷= 2;     // same as score := score ÷ 2
+score **= 2;    // same as score := score ** 2
+```
+
+These are useful for counters, totals, scores, and other values that change
+a little at a time.
+
 Some operators only operate on a single value instead of sitting between
 values. They are called unary prefix or unary suffix operators depending
 on whether you put the operator before or after the value.

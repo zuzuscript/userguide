@@ -175,6 +175,23 @@ let greeted  := "world";
 say `${greeting} ${greeted}`;
 ```
 
+### String assignment operators
+
+The `_=` operator appends to an existing string. It is short for assigning
+the result of `_` back to the same variable.
+
+```zzs
+let message := "Hello";
+
+message _= " ";
+message _= "world";
+
+say message;  // says "Hello world"
+```
+
+This works with `String` and `BinaryString` values, following the same
+coercion rules as `_`.
+
 There are also a few prefix operators supported on strings:
 
 ```zzs

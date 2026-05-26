@@ -161,6 +161,23 @@ This operator is known affectionately as "the Elvis operator".
 It is the only operator that is primarily associated with the `Null`
 data type.
 
+### Elvis assignment
+
+The `?:=` operator assigns a value only when the variable currently contains
+`null`. If the variable already contains a non-null value, it is left alone.
+
+```zzs
+let display_name;
+
+display_name ?:= "Anon";
+display_name ?:= "Zia";
+
+say display_name;  // says "Anon"
+```
+
+This is useful for defaults. You can set a fallback without overwriting a
+value that was already provided by the user, a config file, or another part
+of the program.
 
 ## 5.7 Type-Aware comparison operators
 
@@ -210,4 +227,3 @@ In this chapter, we covered:
 
 In Chapter 6, we will put all this learning to work and write some simple
 practical scripts while learning about control flow.
-

@@ -1,0 +1,346 @@
+from std/config import Config;
+from std/data/json import JSON;
+from std/getopt import Getopt;
+from std/io import Path, STDERR, STDOUT;
+from std/proc import Env;
+from std/string import join, split, starts_with, substr, trim;
+
+function default_config () {
+	return Config.from_data(
+		{
+			input: {
+				files: [],
+			},
+			filters: {
+				names: [],
+				tags: [],
+				since: null,
+			},
+			output: {
+				format: "text",
+				limit: 20,
+				file: null,
+			},
+		},
+		{
+			source: "defaults",
+		},
+	);
+}
+
+function option_schema () {
+	return [
+		{
+			name: "help",
+			short: "h",
+			type: Boolean,
+			desc: "Show this help.",
+		},
+		{
+			name: "config",
+			short: "c",
+			type: String,
+			desc: "Read configuration from FILE.",
+		},
+		{
+			name: "name",
+			short: "n",
+			type: String,
+			multiple: true,
+			desc: "Only include this name.",
+		},
+		{
+			name: "tag",
+			short: "t",
+			type: String,
+			multiple: true,
+			desc: "Only include entries with this tag.",
+		},
+		{
+			name: "since",
+			short: "s",
+			type: String,
+			desc: "Only include entries on or after DATE.",
+		},
+		{
+			name: "limit",
+			short: "l",
+			type: Number,
+			desc: "Maximum number of entries.",
+		},
+		{
+			name: "format",
+			short: "f",
+			type: String,
+			desc: "Output format: text or json.",
+		},
+		{
+			name: "output",
+			short: "o",
+			type: String,
+			desc: "Write output to FILE instead of stdout.",
+		},
+	];
+}
+
+function usage ( option_usage ) {
+	return "usage: naplog [options] FILE...\n\n"
+		_ "Summarize sleepy field notes.\n\n"
+		_ "Options:\n"
+		_ option_usage
+		_ "\n";
+}
+
+function env_overlay () {
+	let overlay := {};
+	for ( let name in [
+		"NAPLOG__OUTPUT__FORMAT",
+		"NAPLOG__OUTPUT__LIMIT",
+		"NAPLOG__OUTPUT__FILE",
+		"NAPLOG__FILTERS__SINCE",
+	] ) {
+		let value := Env.get(name, null);
+		if ( value != null ) {
+			overlay{( name )} := value;
+		}
+	}
+	return overlay;
+}
+
+function apply_cli_options ( cfg, opts, rest ) {
+	if ( opts{name} != null ) {
+		cfg.set( "/filters/names", opts{name} );
+	}
+	if ( opts{tag} != null ) {
+		cfg.set( "/filters/tags", opts{tag} );
+	}
+	if ( opts{since} != null ) {
+		cfg.set( "/filters/since", opts{since} );
+	}
+	if ( opts{limit} != null ) {
+		cfg.set( "/output/limit", opts{limit} );
+	}
+	if ( opts{format} != null ) {
+		cfg.set( "/output/format", opts{format} );
+	}
+	if ( opts{output} != null ) {
+		cfg.set( "/output/file", opts{output} );
+	}
+	if ( rest.length() > 0 ) {
+		cfg.set( "/input/files", rest );
+	}
+	return cfg;
+}
+
+function as_array ( value ) {
+	if ( value instanceof Array ) {
+		return value;
+	}
+	if ( value == null ) {
+		return [];
+	}
+	return [ value ];
+}
+
+function parse_log_line ( raw, source, line_number ) {
+	let text := trim(raw);
+
+	if ( text eq "" or starts_with( text, "#" ) ) {
+		return null;
+	}
+
+	let parts := split( text, " " );
+	if ( parts.length() < 2 ) {
+		STDERR.say(
+			`${source}:${line_number}: ignored malformed line`
+		);
+		return null;
+	}
+
+	let tags := [];
+	let words := [];
+	let i := 2;
+
+	while ( i < parts.length() ) {
+		let part := parts[i];
+		if ( starts_with( part, "#" ) ) {
+			tags.push( substr( part, 1 ) );
+		}
+		else {
+			words.push(part);
+		}
+		i += 1;
+	}
+
+	return {
+		date: parts[0],
+		name: parts[1],
+		tags: tags,
+		message: join( " ", words ),
+		source: "" _ source,
+		line: line_number,
+	};
+}
+
+function overlaps ( wanted, actual ) {
+	if ( wanted.length() = 0 ) {
+		return true;
+	}
+
+	for ( let item in wanted ) {
+		if ( actual.contains(item) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function entry_matches ( entry, cfg ) {
+	let since := cfg.get( "/filters/since", null );
+	if ( since != null and since ne "" and entry{date} lt since ) {
+		return false;
+	}
+
+	let names := as_array( cfg.get( "/filters/names", [] ) );
+	if ( names.length() > 0 and not( names.contains( entry{name} ) ) ) {
+		return false;
+	}
+
+	let tags := as_array( cfg.get( "/filters/tags", [] ) );
+	if ( not overlaps( tags, entry{tags} ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+function read_entries ( files ) {
+	let entries := [];
+
+	for ( let file_name in files ) {
+		let path := new Path(file_name);
+		let line_number := 0;
+
+		for ( let raw in path.lines_utf8() ) {
+			line_number += 1;
+			let entry := parse_log_line(
+				raw,
+				path.to_String(),
+				line_number,
+			);
+
+			if ( entry != null ) {
+				entries.push(entry);
+			}
+		}
+	}
+
+	return entries;
+}
+
+function format_tags ( tags ) {
+	let out := [];
+	for ( let tag in tags ) {
+		out.push( "#" _ tag );
+	}
+	return join( " ", out );
+}
+
+function render_text ( entries ) {
+	let lines := [];
+
+	for ( let entry in entries ) {
+		let tags := format_tags( entry{tags} );
+		lines.push(
+			`${entry{date}} ${entry{name}} ${tags} ${entry{message}}`
+		);
+	}
+
+	lines.push( "" );
+	lines.push( `${entries.length()} entries` );
+	return join( "\n", lines ) _ "\n";
+}
+
+function render_json ( entries ) {
+	return ( new JSON( pretty: true, canonical: true ) ).encode(entries)
+		_ "\n";
+}
+
+function write_output ( text, cfg ) {
+	let destination := cfg.get( "/output/file", null );
+
+	if ( destination != null and destination ne "" ) {
+		( new Path(destination) ).spew_utf8(text);
+	}
+	else {
+		STDOUT.print(text);
+	}
+}
+
+function __main__ ( argv ) {
+	let schema := option_schema();
+	let parsed := Getopt.schema( argv, schema );
+
+	if ( parsed{options}{help} ) {
+		STDOUT.print( usage( parsed{usage} ) );
+		return 0;
+	}
+
+	if ( not parsed{ok} ) {
+		STDERR.say(parsed{error});
+		STDERR.say("");
+		STDERR.print( usage( parsed{usage} ) );
+		return 2;
+	}
+
+	let opts := parsed{options};
+	let cfg := default_config();
+
+	if ( opts{config} != null ) {
+		cfg.load_file( new Path( opts{config} ) );
+	}
+
+	cfg.merge_flat(
+		env_overlay(),
+		{
+			prefix: "NAPLOG__",
+			separator: "__",
+			lowercase: true,
+			coerce: true,
+		},
+	);
+
+	apply_cli_options( cfg, opts, parsed{argv} );
+
+	let files := as_array( cfg.get( "/input/files", [] ) );
+	if ( files.length() = 0 ) {
+		STDERR.say("naplog: no input files");
+		return 2;
+	}
+
+	let entries := [];
+	for ( let entry in read_entries(files) ) {
+		if ( entry_matches( entry, cfg ) ) {
+			entries.push(entry);
+		}
+	}
+
+	let limit := cfg.get( "/output/limit", 20 );
+	if ( limit > 0 and entries.length() > limit ) {
+		entries := entries.slice( 0, limit );
+	}
+
+	let format := cfg.get( "/output/format", "text" );
+	if ( format ne "text" and format ne "json" ) {
+		STDERR.say(`naplog: unknown output format '${format}'`);
+		return 2;
+	}
+
+	let output := format eq "json"
+		? render_json(entries)
+		: render_text(entries);
+
+	write_output( output, cfg );
+	return 0;
+}

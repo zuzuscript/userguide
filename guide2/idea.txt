@@ -9,16 +9,16 @@
 9: Exceptions and Results
 10: Modules
 11: Regexp
-12: Paths, destructuring, nested structures, etc
+12: Paths, destructuring, nested structures, ZZPath, etc
 13: Chains
 14: Concurrency, std/task, and std/worker
 15: IO, Files, and directories with JSON, XML, etc
 16: Proc
-17: Command line and Getopt
+17: Command line, std/config, std/getopt
 18: Zuzuzoo and test/more
 19: Databases and CSV
 20: Web (client)
 21: Web (server raw)
-22: Web (server high level)
+22: Web (server high level, ZZTemplate)
 23: GUIs
 24: Crypto

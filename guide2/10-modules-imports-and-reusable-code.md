@@ -633,9 +633,6 @@ That shape keeps dependencies pointing in one direction.
 
 ZuzuScript module files may contain POD documentation.
 
-Standard-library modules place POD at the top of the `.zzm` file, before
-the executable code.
-
 POD begins with headings such as `=head1`, uses paragraphs of plain text,
 and ends before the code resumes with `=cut`.
 
@@ -651,7 +648,7 @@ app/greeting - Greeting helpers for the application.
 =head1 SYNOPSIS
 
   from app/greeting import greeting, Greeter;
-
+  
   say greeting("Ada");
   let greeter := new Greeter( prefix: "Hello" );
   say greeter.greet("Lin");
@@ -781,7 +778,7 @@ A small project can now have a clean shape:
 ```text
 todo/
   todo.zzs
-  lib/
+  modules/
     todo/
       model.zzm
       store.zzm
@@ -789,7 +786,7 @@ todo/
       api.zzm
 ```
 
-`lib/todo/model.zzm`:
+`modules/todo/model.zzm`:
 
 ```zzs
 =encoding utf8
@@ -824,7 +821,7 @@ class TodoItem {
 }
 ```
 
-`lib/todo/format.zzm`:
+`modules/todo/format.zzm`:
 
 ```zzs
 from todo/model import TodoItem;
@@ -835,7 +832,7 @@ function format_item (item) {
 }
 ```
 
-`lib/todo/api.zzm`:
+`modules/todo/api.zzm`:
 
 ```zzs
 from todo/model import TodoItem;
@@ -854,7 +851,7 @@ say format_item(item);
 Run it:
 
 ```bash
-zuzu -Ilib todo.zzs
+zuzu -Imodules todo.zzs
 ```
 
 That is the module system doing its main job:

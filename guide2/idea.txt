@@ -9,7 +9,7 @@
 9: Exceptions and Results
 10: Modules
 11: Regexp
-12: Paths
+12: Paths, destructuring, nested structures, etc
 13: Chains
 14: Concurrency, std/task, and std/worker
 15: IO, Files, and directories with JSON, XML, etc

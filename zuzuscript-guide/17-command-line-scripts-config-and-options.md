@@ -22,7 +22,8 @@ This chapter is about writing that kind of script:
 The example script is called `naplog`. It reads small local log files,
 filters entries, and prints either text or JSON output. It is not a toy
 "hello world" script, but it is still small enough to read in one sitting.
-The complete script is available as [naplog.zzs](naplog.zzs).
+The complete script is available as
+[naplog.zzs](https://zuzulang.org/files/userguide/naplog.zzs).
 
 
 ## 17.1 What a script entrypoint receives

@@ -2,6 +2,10 @@
 
 <img src="https://zuzulang.org/img/zia-collection.jpeg" alt="An impressive collection, Zia!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
+Numbers and strings are useful on their own, but programs rarely stop at one
+value. As soon as you have several names, several scores, several lines of
+input, or several options from a user, you need a collection.
+
 Collection types are how ZuzuScript keeps track of related values. The
 two collection types you'll be using all the time are `Array` and `Dict`,
 but ZuzuScript has a few more built-in collection types can also be useful.
@@ -444,3 +448,5 @@ Now we've learnt about:
 - collection methods
 
 In Chapter 5, we will look at booleans and truthiness.
+That is where collections, numbers, and strings start influencing which code
+runs next.

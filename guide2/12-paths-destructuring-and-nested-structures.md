@@ -541,4 +541,6 @@ You now have the main tools for nested data:
 - path assignment updates selected locations,
 - and `\` creates reusable getter/setter references to lvalues.
 
-Next up: chains, where expressions start flowing into each other.
+Next up: chains, where expressions start flowing into each other. After
+learning how to reach the right value, we will make the path from one
+operation to the next easier to read.

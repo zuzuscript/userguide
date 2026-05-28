@@ -1,5 +1,8 @@
 # Chapter 21: Writing Web Apps with the Raw Protocol
 
+Chapter 20 treated the web as something a script calls. Now the script is
+on the other side of the connection.
+
 Most ZuzuScript programs in this guide have started at the command line:
 the runtime loads a file, optionally calls `__main__`, and the script
 prints or writes whatever it needs.

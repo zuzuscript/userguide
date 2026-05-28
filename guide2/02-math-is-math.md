@@ -5,8 +5,12 @@
 Almost every non-trivial program you write will need to deal with numbers, so
 numbers are a great place to start learning about ZuzuScript.
 
-We'll sneak in some general knowledge about the language while we're
-discussing it too.
+Chapter 1 got a script onto the screen. This chapter starts turning that
+script into a language you can reason about: values, types, expressions,
+operators, modules, and method calls.
+
+We'll sneak in that general knowledge while we are talking about arithmetic,
+because numbers give us a simple place to see how ZuzuScript thinks.
 
 
 ## 2.1 The `Number` data type
@@ -443,6 +447,8 @@ Now we've learnt about:
 - how ZuzuScript operators coerce things
 - the `std/math` module
 
-We've also learnt a little bit about how method calls work and how to use modules, but we will cover those in more detail later.
+We've also learnt a little bit about how method calls work and how to use
+modules. Those details will return later when scripts become larger, but
+for now the important thing is that expressions can already do real work.
 
 In Chapter 3, we will introduce another important basic data type: strings.

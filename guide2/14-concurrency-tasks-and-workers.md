@@ -729,4 +729,6 @@ You now have the concurrency model:
 - channels provide FIFO message passing inside one runtime,
 - workers provide shared-nothing parallel work in another runtime.
 
-Next up: IO, files, and directories.
+Next up: IO, files, and directories. That is where tasks meet the outside
+world: reading, writing, waiting, and keeping data in formats other programs
+can understand.

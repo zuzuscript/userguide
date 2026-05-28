@@ -837,3 +837,7 @@ You now know how to:
 
 Regexps are sharp tools. Start with small patterns, test them with real
 input, and keep cross-platform patterns deliberately simple.
+
+Patterns help you find meaning inside text. Chapter 12 applies the same
+idea to structured data, where the interesting value may be several arrays
+and dictionaries deep.

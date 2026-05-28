@@ -627,3 +627,7 @@ In this chapter, you learned how error flow works in ZuzuScript:
 
 This chapter gives you the resilience to survive imperfect inputs, missing
 dependencies, and decisions that did not age well.
+
+Next we will use that resilience while splitting code into modules. Good
+module boundaries make failure easier to localize, and optional imports give
+you one more way to degrade gracefully.

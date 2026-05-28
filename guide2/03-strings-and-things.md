@@ -2,6 +2,11 @@
 
 <img src="https://zuzulang.org/img/zia-strings.jpeg" alt="All tangled up!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
+Chapter 2 was about numbers: values you can calculate with.
+
+Now we turn to text, because most practical scripts eventually need to read,
+write, compare, format, or rearrange words.
+
 Strings can be thought of as pieces of text or collections of bytes. In fact,
 these two ways of thinking of strings are the reason ZuzuScript has not one,
 but two string types:
@@ -377,4 +382,6 @@ In this chapter we learnt about:
 - the `std/string` module
 
 It's useful to be able to work with a number or a string, but even more
-useful when you can work on a whole collection of them.
+useful when you can work on a whole collection of them. Chapter 4 takes the
+values we have met so far and starts grouping them into arrays, dictionaries,
+sets, bags, and pair lists.

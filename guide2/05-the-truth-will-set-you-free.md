@@ -2,6 +2,10 @@
 
 <img src="https://zuzulang.org/img/zia-booleans.jpeg" alt="Zia learning about booleans." class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
+Chapter 4 gave us collections: values with shape.
+
+Now we need the values that help programs make decisions about that shape.
+
 This chapter will introduce you to the final two basic data types in
 ZuzuScript: `Null` and `Boolean`.
 
@@ -227,3 +231,5 @@ In this chapter, we covered:
 
 In Chapter 6, we will put all this learning to work and write some simple
 practical scripts while learning about control flow.
+Booleans are the bridge: they are what conditions, loops, and choices listen
+to.

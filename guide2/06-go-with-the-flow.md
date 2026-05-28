@@ -2,6 +2,9 @@
 
 <img src="https://zuzulang.org/img/zia-flow.jpeg" alt="Wake up, Zia!" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
+Chapter 5 gave us truth values. Now we can use them to choose what happens
+next.
+
 With what we've learnt so far, we can already write some basic programs.
 
 ```zzs
@@ -409,4 +412,3 @@ scripting code.
 
 If the code starts feeling twisty, split the work into helper functions.
 Which is our next topic.
-

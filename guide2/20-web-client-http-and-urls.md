@@ -2,7 +2,8 @@
 
 Chapter 19 worked with tabular data in databases and CSV files.
 
-This chapter moves to the web from the client side:
+Those tables might come from an API, and reports might need to be uploaded
+somewhere else. This chapter moves to the web from the client side:
 
 - building URLs,
 - escaping query values,
@@ -625,3 +626,6 @@ Before writing a web client, decide:
 Use `std/net/url` to make URLs boring and correct. Use `std/net/http` to
 make requests explicit: method, URL, headers, body, timeout, and response
 handling.
+
+So far the script has been the client. Chapter 21 turns the direction
+around: ZuzuScript receives HTTP requests and returns responses.

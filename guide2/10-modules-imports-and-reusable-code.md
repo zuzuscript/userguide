@@ -882,3 +882,7 @@ Modules are the point where scripts start becoming systems.
 
 Keep module boundaries small, name exports plainly, document the contract,
 and make startup paths explicit with `-I`.
+
+Once code is split into reusable pieces, text processing becomes a common
+job for those pieces. Chapter 11 focuses on regular expressions: compact
+patterns for recognizing and transforming strings.

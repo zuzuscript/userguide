@@ -12,6 +12,10 @@ If functions are great individual tools, classes are your labeled drawers,
 traits are your reusable stickers, and objects are the tools currently
 covered in coffee foam because Zia "was helping."
 
+Objects let values carry behaviour with them. That makes larger scripts
+easier to talk about, and it also gives us better names for the things that
+can go wrong.
+
 In this chapter we will cover:
 
 - class and object basics,

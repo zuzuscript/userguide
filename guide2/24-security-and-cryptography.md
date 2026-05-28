@@ -1,5 +1,9 @@
 # Chapter 24: Security and Cryptography
 
+By now the guide has touched most of the places a script meets the world:
+files, processes, packages, databases, HTTP, web servers, and GUIs. Those
+boundaries are exactly where trust and safety start to matter.
+
 Security code is ordinary application code with less room for improvising.
 ZuzuScript keeps the public cryptography surface in one runtime-supported
 module:
@@ -427,3 +431,7 @@ signing, key agreement, certificate inspection, and TLS identity parsing.
 The module is deliberately capability-based because different hosts have
 different safe primitives available. Appendix H lists the current support
 matrix in detail.
+
+That closes the technical tour. Chapter 25 takes one last step back:
+what you have learned, what you can build next, and where to look when
+you need a quick answer.

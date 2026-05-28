@@ -12,6 +12,10 @@ This chapter turns that kind of code into something other people can use:
 The example is a small distribution called `naplog-tools`. It provides a
 module for parsing nap log lines and a script that can use that module.
 
+The shape should feel familiar by now: clear module boundaries from Chapter
+10, useful failure behaviour from Chapter 9, and the command-line edge from
+Chapter 17.
+
 
 ## 18.1 Why distributions start with modules
 
@@ -535,3 +539,6 @@ is only kept for legacy support.
 
 Code that runs today should still run in ten years.
 
+Once code is published, people will use it with real data. Chapter 19 turns
+to one of the most common shapes of that data: tables, whether they live in
+CSV files or SQL databases.

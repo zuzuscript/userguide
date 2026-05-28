@@ -698,3 +698,7 @@ The important pattern is:
 - check `ok`,
 - use `Proc.status_text` in diagnostics,
 - and use the async forms when the surrounding workflow is async.
+
+At this point we have files, structured data, environment, and external
+commands. Chapter 17 pulls those pieces together into a full command-line
+tool with options, config, validation, and exit codes.

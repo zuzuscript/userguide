@@ -11,6 +11,9 @@ That is the job of functions.
 Functions are where scripts stop being a pile of steps and start being
 small systems of reusable ideas.
 
+They also give names to decisions and loops from the last chapter, so the
+main path through a script can stay readable.
+
 In this chapter we will cover:
 
 - function definition and calling,
@@ -591,4 +594,3 @@ structure:
 - composition patterns.
 
 If functions are excellent tools, objects are the toolbox.
-

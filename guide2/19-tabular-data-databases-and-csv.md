@@ -1,9 +1,9 @@
 # Chapter 19: Tabular Data with Databases and CSV
 
-Chapter 18 packaged reusable code.
+Chapter 18 packaged reusable code so other people could install it.
 
-This chapter is about tabular data: rows, columns, imports, exports, and
-queries.
+Now we look at a common kind of data those tools often handle: tables.
+This chapter is about rows, columns, imports, exports, and queries.
 
 Zia the sleepy raccoon coder wants to keep track of coffee shops. The
 important facts are:
@@ -654,3 +654,7 @@ Use both when the workflow asks for it:
 
 That is the main pattern for tabular data in ZuzuScript: use `CSV` at the
 edges and `DB` when you need the database to answer questions.
+
+Tables are often local, but scripts also need to talk to remote services.
+Chapter 20 moves from files and databases to the web client side: URLs,
+HTTP requests, response bodies, and downloads.

@@ -2,8 +2,11 @@
 
 Chapter 16 covered processes and environment variables.
 
-This chapter is about putting several pieces together to write useful
-command-line scripts:
+Now we put several pieces together. A useful command-line script often
+touches files, reads configuration, accepts environment overrides, reports
+errors, and returns an exit code another program can trust.
+
+This chapter is about writing that kind of script:
 
 - `__main__(argv)`,
 - positional arguments,
@@ -906,3 +909,7 @@ For your own command-line scripts:
 The exact `naplog` format is not important. The durable idea is that a
 script should have a clear outside boundary: command-line arguments,
 configuration, environment, files, and exit status are all made explicit.
+
+That boundary also makes the code easier to test, package, and share.
+Chapter 18 takes the `naplog` idea and turns reusable code into a tested
+ZDF-1 distribution.

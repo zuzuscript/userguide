@@ -500,3 +500,7 @@ including `method`, `protocol`, `scheme`, `host`, `server_name`,
 The raw protocol remains available. You can mix direct raw responses,
 `Response` objects, and routed actions in the same application while
 gradually moving from simple request handlers to a fuller router.
+
+The last few chapters have moved through command-line tools, packages,
+data, HTTP clients, and HTTP servers. Chapter 23 takes a different route
+out of the terminal: small graphical interfaces built with `std/gui`.

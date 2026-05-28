@@ -848,3 +848,7 @@ The same shape works for other codecs:
 
 Keep the boundary clear: `Path` handles the filesystem, while the codec
 handles the file format.
+
+Files are one major boundary between a script and the outside world.
+Chapter 16 turns to another: environment variables, child processes,
+signals, and the runtime state exposed through `__system__`.

@@ -1,5 +1,9 @@
 # Chapter 23: Building Simple GUIs
 
+Chapters 21 and 22 showed ZuzuScript responding to web requests. A web app
+is one way to give a script a user-facing surface; a small graphical window
+is another.
+
 Most of this guide has treated ZuzuScript as a command-line scripting
 language. That is still its centre of gravity, but scripts sometimes
 need a small window: a form, a confirmation step, a file picker, or a
@@ -398,6 +402,10 @@ Zia's final GUI rule is boring on purpose: keep business logic outside
 the window. The clearer the boundary, the easier it is to test, reuse,
 and improve.
 
-The same boundary matters when a script leaves the terminal in another
-direction. Chapters 21 and 22 cover small web applications, from raw
-HTTP request handling to routed responses.
+The same boundary matters everywhere in this guide: command-line tools,
+packages, database scripts, web apps, and GUIs all stay healthier when the
+core logic is separated from the interface.
+
+The next technical topic is security. Chapter 24 looks at randomness,
+password hashing, encryption, signing, certificates, and how to write code
+that checks what the current runtime can safely support.

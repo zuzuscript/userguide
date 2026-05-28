@@ -459,3 +459,5 @@ You now have the practical model for chains:
 - `|>` and `<|` are ASCII aliases, but `▷` and `◁` are canonical.
 
 Next up: concurrency, where work starts happening in more than one place.
+Chains make one path through data easier to read; tasks and workers help
+when there are several paths in progress at once.

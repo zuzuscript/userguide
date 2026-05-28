@@ -13,13 +13,17 @@ A valid distribution includes:
 - `scripts` directory containing scripts, optional.
 - `tests` directory containing tests, optional.
 - `inc` directory containing helper modules which will not be installed, optional.
-- `README.md`, optional.
-- `CONTRIBUTING.md`, optional.
-- `SECURITY.md`, optional.
-- `LICENSE`, optional.
+- top-level documentation files, optional.
 
 These must be inside one single top-level directory named
 `${name}-${version}`.
+
+Top-level documentation files may be Markdown files ending in `.md`,
+POD files ending in `.pod`, plain text files ending in `.txt`, or
+extensionless files with all-uppercase filenames. Extensionless
+all-uppercase documentation files are treated as plain text. Common
+examples include `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, and
+`LICENSE`, but those names are not special.
 
 Example:
 

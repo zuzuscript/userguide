@@ -46,7 +46,8 @@ Chapters 7-13 showed how to organize larger thoughts:
 
 - functions,
 - classes, methods, roles, and objects,
-- exceptions and `Result`,
+- weak references and bound method values,
+- exceptions, `Result`, `debug`, and `assert`,
 - modules and imports,
 - regular expressions,
 - paths, destructuring, and nested structures,
@@ -61,8 +62,10 @@ Chapters 14-20 moved out into the world:
 - concurrent tasks and workers,
 - filesystem IO,
 - JSON, XML, and other structured data,
+- diagnostic dumping,
 - child processes,
 - environment and system state,
+- time and date handling,
 - command-line options,
 - configuration,
 - tests,
@@ -211,7 +214,9 @@ Use **Appendix C**,
 
 - you know the module you want but not the exact function name,
 - you need a quick list of exports,
-- you are checking whether a helper already exists.
+- you are checking whether a helper already exists,
+- you want to find modules such as `std/dump`, `std/eval`, or `std/time`
+  quickly.
 
 Use **Appendix D**,
 [Zuzu Distribution Packaging Format](AD-distribution-format.md), when:
@@ -253,14 +258,17 @@ Use **Appendix I**,
 
 - you are choosing names for variables, functions, methods, or modules,
 - generated code needs to avoid reserved words,
-- syntax highlighting or parsing needs a definitive keyword list.
+- syntax highlighting or parsing needs a definitive keyword list,
+- you need a quick reminder of special names such as `__argc__`,
+  `__file__`, or `__global__`.
 
 Use **Appendix J**,
 [Built-In Classes and Types](AJ-built-in-classes-and-types.md), when:
 
 - you need to check the basic type model,
 - you are unsure what operations belong to a built-in class,
-- you are documenting or debugging values at runtime.
+- you are documenting or debugging values at runtime,
+- you see `AssertionException`, `Method`, or another runtime type name.
 
 
 ## 25.5 Where to Look First
@@ -272,12 +280,14 @@ Here is a faster version.
 | Syntax shape | Appendix A |
 | Operator precedence | Appendix B |
 | Standard-library function names | Appendix C |
+| Dumping, eval, or time helpers | Appendix C |
 | Package format details | Appendix D |
 | Runtime compatibility | Appendix E |
 | GUI widget properties | Appendix F |
 | Collection method names | Appendix G |
 | Security capability support | Appendix H |
 | Reserved words | Appendix I |
+| Special keyword names | Appendix I |
 | Built-in types | Appendix J |
 
 For ordinary programming, Appendix C and Appendix G are likely to be the
@@ -317,10 +327,12 @@ You have seen ZuzuScript as:
 - a control-flow language,
 - a module system,
 - an object system,
+- a language with weak references and bound methods,
 - a pattern-matching tool,
 - a data wrangling tool,
 - a concurrent task runner,
 - a filesystem and process automation language,
+- a runtime-inspection and debugging language,
 - a command-line scripting language,
 - a packageable library language,
 - a database and CSV language,

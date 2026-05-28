@@ -286,6 +286,45 @@ That means:
 Like `try import`, conditional imports are for named imports, not wildcard
 imports.
 
+### Dynamic evaluation with `std/eval`
+
+Most programs should use normal modules and imports. When you are writing
+tools, plug-in systems, or small controlled scripting surfaces, `std/eval`
+can evaluate ZuzuScript source from a string:
+
+```zzs
+from std/eval import eval;
+
+let cups := 1;
+eval("cups += 1;");
+say cups;                    // 2
+```
+
+`eval(source)` runs the source in a fresh nested scope whose parent is the
+caller. Evaluated code can read and update mutable bindings that already
+exist in the caller, but declarations, functions, classes, and imports
+created inside the eval stay local to that eval call.
+
+You can add capability denials for evaluated code:
+
+```zzs
+try {
+	eval(
+		"from std/io import Path;",
+		deny_fs: true,
+	);
+}
+catch ( Exception e ) {
+	say "filesystem access was denied";
+}
+```
+
+Denials can only make the evaluated code more restricted. They cannot
+relax denials that were already applied by the outer runtime.
+
+Treat `std/eval` as a sharp tool. Do not evaluate untrusted text. If the
+code is known ahead of time, put it in a module and import it normally.
+
 
 ## 10.8 Module search paths
 
@@ -871,6 +910,7 @@ You now know how to:
 - use wildcard imports when appropriate,
 - use `try import` for optional modules,
 - use postfix `if` and `unless` for conditional imports,
+- use `std/eval` cautiously for controlled dynamic evaluation,
 - add project module roots with `-I`,
 - understand the search order used by the module loader,
 - write `.zzm` files,

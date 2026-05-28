@@ -162,8 +162,34 @@ This tiny script already shows a few important things:
 - statements end with semicolons,
 - double-quoted strings are straightforward,
 - `let` introduces a variable binding (`:=`),
-- `say` prints a line.
-- backtick-quoted strings interpolate variables
+- `say` prints a line,
+- backtick-quoted strings interpolate variables.
+
+You can leave notes for yourself with comments. Use `//` for a comment
+that runs to the end of the line, and `/* ... */` for a comment that can
+span several lines:
+
+```zzs
+// One-line note.
+say "awake";
+
+/*
+This block can hold a longer explanation,
+or temporarily hide a few lines while you experiment.
+*/
+say "still awake";
+```
+
+For output, `say` is the one you will use most often. It writes to
+standard output and adds a newline. `print` also writes to standard
+output, but does not add a newline. `warn` writes to standard error and
+adds a newline, so it is better for diagnostics than ordinary results:
+
+```zzs
+print "status: ";
+say "ok";
+warn "using default config";
+```
 
 ### Inline execution with `-e`
 
@@ -500,6 +526,7 @@ You now know:
 
 - what ZuzuScript is trying to optimize for,
 - how to run scripts with `zuzu`,
+- how comments, `say`, `print`, and `warn` work at the first-script level,
 - when to use REPL vs files,
 - the meaning of `.zzs` and `.zzm`,
 - the high-level execution model,

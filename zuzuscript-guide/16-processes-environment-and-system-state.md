@@ -453,7 +453,53 @@ The async forms still run operating-system processes. They simply let the
 ZuzuScript scheduler make progress while the process is running.
 
 
-## 16.11 Sleeping
+## 16.11 Time and dates with `std/time`
+
+The process chapter is also a natural place to talk about clocks.
+`std/time` provides immutable time values, timezones, durations, parsing,
+and formatting:
+
+```zzs
+from std/time import Time, TimeZone, Duration, TimeFormat;
+
+let london := TimeZone.named("Europe/London");
+let now := new Time(timezone: london);
+let next_hour := now.add( Duration.hours(1) );
+let tomorrow := now.add_days(1);
+
+say now.datetime();
+say next_hour.datetime();
+say tomorrow.date();
+```
+
+`Time` stores an instant, while its timezone controls calendar fields and
+display. Methods such as `add_seconds`, `add_minutes`, and `add_hours`
+are elapsed-time operations. Methods such as `add_days`, `add_weeks`,
+`add_months`, and `add_years` are calendar operations in the time
+object's timezone.
+
+For text formats, use `Time.parse` or a `TimeFormat` helper:
+
+```zzs
+let parsed := Time.parse("2026-05-08T12:00:00Z");
+say TimeFormat.rfc3339().format(parsed);
+```
+
+Zone-less input needs an explicit timezone:
+
+```zzs
+let local_noon := Time.parse(
+	"2026-05-08T12:00:00",
+	timezone: london,
+);
+```
+
+Reach for `std/time` when a script needs to compare instants, schedule
+work, format timestamps, parse HTTP or mail dates, or avoid hand-written
+date arithmetic.
+
+
+## 16.12 Sleeping
 
 `std/proc` exports a synchronous `sleep(seconds)`:
 
@@ -492,7 +538,7 @@ ways to pause in async code. The important distinction in this chapter is:
 - `std/proc.sleep_async(seconds)` is awaitable.
 
 
-## 16.12 Signals
+## 16.13 Signals
 
 Signals are operating-system notifications sent to a process. Common
 signals include `INT` and `TERM`. Some systems also support signals such
@@ -544,7 +590,7 @@ signal callbacks short. Set a flag, write a small message, or trigger
 cleanup; do not put large application workflows inside the handler.
 
 
-## 16.13 Exiting the current process
+## 16.14 Exiting the current process
 
 Use `Proc.exit(code?)` to terminate the current process:
 
@@ -573,7 +619,7 @@ script entrypoints and command-line tools. Library code should usually
 throw an exception or return an error value instead.
 
 
-## 16.14 The `__system__` global
+## 16.15 Runtime facts: `__system__`, `__file__`, and `__global__`
 
 `__system__` is a read-only global dictionary describing the current
 runtime:
@@ -643,8 +689,34 @@ __system__{deny_proc} := false;     // invalid
 It is information, not permission. A script can inspect it, but cannot
 grant itself or its child processes new capabilities by changing it.
 
+`__file__` is a file-local const describing the file currently being
+evaluated:
 
-## 16.15 A complete small example
+```zzs
+if ( __file__ ≢ null ) {
+	say __file__.absolute.to_String;
+}
+```
+
+It is a `std/io` `Path` when the runtime can provide one, or `null` when
+no file path is available or filesystem access is denied. Inline `-e`
+code is a good example of a context where there may be no useful file.
+
+`__global__` is a mutable runtime-global dictionary shared by loaded code:
+
+```zzs
+__global__{tool_run_count} := (__global__{tool_run_count} ?: 0) + 1;
+say __global__{tool_run_count};
+```
+
+Use it sparingly. Normal modules, exports, function parameters, and
+objects make ownership clearer. `__global__` is most useful for runtime
+coordination points, instrumentation, or low-level integration code where
+a deliberately shared dictionary is simpler than threading state through
+many layers.
+
+
+## 16.16 A complete small example
 
 This script runs a formatter command, reports errors clearly, and uses an
 environment variable for configuration.
@@ -700,5 +772,6 @@ The important pattern is:
 - and use the async forms when the surrounding workflow is async.
 
 At this point we have files, structured data, environment, and external
-commands. Chapter 17 pulls those pieces together into a full command-line
-tool with options, config, validation, and exit codes.
+commands, plus the time and runtime facts scripts often need around them.
+Chapter 17 pulls those pieces together into a full command-line tool with
+options, config, validation, and exit codes.

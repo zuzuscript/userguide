@@ -69,7 +69,9 @@ Zuzu has `say` and `die`, regex literals, lexical imports, objects,
 classes, methods, runtime type annotations, and rich collection support.
 It also has dedicated string comparison operators such as `eq`, `ne`,
 `lt`, and `gt`, so Perl programmers do not have to unlearn the habit of
-choosing numeric and string comparison deliberately.
+choosing numeric and string comparison deliberately. Zuzu has a topic
+variable like Perl's `$_` however it's spelled `^^` and only valid in
+a handful of situations.
 
 Where Zuzu gets especially concise is nested data access. Perl can do
 this well, but deep traversals usually involve chained dereferences,

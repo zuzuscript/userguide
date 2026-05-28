@@ -468,7 +468,15 @@ STDOUT.say("normal output");
 STDERR.say("diagnostic output");
 ```
 
-`STDOUT` and `STDERR` provide `print` and `say`.
+`STDOUT` and `STDERR` provide `print` and `say`. The keyword forms from
+Chapter 1 are convenient shortcuts for the common cases:
+
+- `say value;` writes to standard output with a newline,
+- `print value;` writes to standard output without a newline,
+- `warn value;` writes to standard error with a newline.
+
+Use the stream objects when you want the destination to be explicit or
+when you are passing output handles around.
 
 `STDIN` provides `next_line` and `each_line`:
 
@@ -481,6 +489,35 @@ STDIN.each_line(
 	}
 );
 ```
+
+
+### Inspecting values with `std/dump`
+
+When you are debugging a nested value, `std/dump` gives you readable,
+code-like output:
+
+```zzs
+from std/dump import Dumper;
+
+let report := {
+	name: "Zia",
+	cups: [ 1, 2, 3 ],
+	sleepy: true,
+};
+
+say Dumper.dump(
+	report,
+	{ pretty: true, sort_keys: true },
+);
+```
+
+`Dumper.dump(value, options?)` returns a string. Common options include
+`pretty: true` for multi-line output, `sort_keys: true` for stable
+dictionary ordering, and `colour: true` for ANSI-coloured terminal output.
+
+Use `std/dump` for diagnostics, tests, and quick inspection. It is not a
+storage or interchange format. For files you plan to read later, prefer
+one of the structured data modules below.
 
 
 ## 15.12 Structured data files
@@ -850,5 +887,7 @@ Keep the boundary clear: `Path` handles the filesystem, while the codec
 handles the file format.
 
 Files are one major boundary between a script and the outside world.
-Chapter 16 turns to another: environment variables, child processes,
-signals, and the runtime state exposed through `__system__`.
+`std/dump` gives you a quick inspection tool while you are shaping those
+values. Chapter 16 turns to another boundary: environment variables, child
+processes, time, signals, and the runtime state exposed through
+`__system__`.

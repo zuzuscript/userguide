@@ -493,7 +493,71 @@ throw new StartupError(
 The future debug session will thank you.
 
 
-## 9.11 Debugging workflows that actually help
+## 9.11 `debug`, `assert`, and always-on warnings
+
+ZuzuScript has two debugging keywords that are controlled by the runtime
+debug level: `debug` and `assert`.
+
+`debug level, expr` writes a diagnostic line to standard error when
+`level` is less than or equal to the current runtime debug level:
+
+```zzs
+debug 1, "loaded config";
+debug 2, "config detail: " _ config{name};
+```
+
+At the default debug level `0`, those two lines do nothing. At `-d1`, the
+first line prints. At `-d2`, both lines print.
+
+```sh
+zuzu -d1 script.zzs
+zuzu -d2 script.zzs
+```
+
+The message expression is not evaluated when the line is filtered out.
+That makes `debug` useful for temporary trace points that would otherwise
+be expensive or noisy:
+
+```zzs
+debug 2, "full payload: " _ build_large_diagnostic(payload);
+```
+
+Use `debug` for developer-facing trace output. Do not use it for messages
+that users need to see during normal execution.
+
+`assert expr` checks an internal assumption only when debugging is enabled:
+
+```zzs
+function average ( Array values ) {
+	assert values.length() > 0;
+	return values.sum() / values.length();
+}
+```
+
+At debug level `0`, the assertion expression is not evaluated. With
+debugging enabled, a false assertion throws `AssertionException`. That
+makes `assert` good for invariants that should never be false if the
+program is correct.
+
+Do not use `assert` for ordinary input validation:
+
+```zzs
+// Good: user-facing validation.
+if ( values.length() = 0 ) {
+	die "cannot average an empty list";
+}
+
+// Good: internal sanity check after validation.
+assert values.length() > 0;
+```
+
+Use `warn` when the diagnostic should always be emitted. `warn` writes to
+standard error and adds a newline; it is not gated by the debug level.
+That makes it suitable for deprecations, fallback notices, and operational
+messages that should not disappear in normal mode.
+
+
+## 9.12 Debugging workflows that actually help
 
 When something breaks, calm, repeatable habits beat heroics.
 
@@ -538,7 +602,7 @@ let parsed := try {
 If you recover, recover to a known, documented default.
 
 
-## 9.12 Mini lab: release pipeline
+## 9.13 Mini lab: release pipeline
 
 Let’s wire several ideas together.
 
@@ -598,7 +662,7 @@ What this does:
 This is the robust style we want.
 
 
-## 9.13 Practical checklist for production-ish scripts
+## 9.14 Practical checklist for production-ish scripts
 
 Before shipping a script, ask:
 
@@ -613,7 +677,7 @@ Before shipping a script, ask:
 A tiny checklist like this saves real debugging hours.
 
 
-## 9.14 Chapter recap
+## 9.15 Chapter recap
 
 In this chapter, you learned how error flow works in ZuzuScript:
 
@@ -624,6 +688,8 @@ In this chapter, you learned how error flow works in ZuzuScript:
 - `try/catch` works as both statement and expression,
 - `std/result` lets APIs return explicit success or failure values,
 - `try import` enables graceful optional-module behaviour.
+- `debug`, `assert`, and `warn` give you different levels of diagnostic
+  output and invariant checking.
 
 This chapter gives you the resilience to survive imperfect inputs, missing
 dependencies, and decisions that did not age well.

@@ -54,6 +54,45 @@ flow. You do not have to worry about word splitting, quoting every
 expansion, subshell behaviour in pipelines, or whether a value contains
 spaces.
 
+Zuzu also has chain operators for the shell idea of joining small steps
+together. In shell, you might connect commands with `|` so the output of
+one command becomes the input to the next:
+
+```sh
+printf '  api enabled  \n' |
+  sed 's/^ *//;s/ *$//' |
+  tr ' ' '-' |
+  tr '[:lower:]' '[:upper:]'
+```
+
+In Zuzu, the same shape is written with the forward chain operator `▷`.
+Each step receives the previous value as `^^`, transforms it, and passes
+the result onward:
+
+```zzs
+from std/string import trim, split, join;
+
+let label := "  api enabled  "
+	▷ trim(^^)
+	▷ split(^^, " ")
+	▷ join( "-", ^^ )
+	▷ uc ^^;
+
+say label;    // API-ENABLED
+```
+
+Read `▷` as "then". Start with a value, then trim it, then split it,
+then join the pieces, then uppercase the result. The value of the whole
+chain is the value produced by the final step, so you can assign it,
+print it, return it, or pass it to another function.
+
+There is also a reverse chain operator, `◁`, for the occasional case
+where reading right-to-left is clearer. The Unicode spellings are the
+canonical ones, but the ASCII aliases `|>` and `<|` are available too.
+If your shell habits make pipelines feel natural, Zuzu chains are the
+same readability tool applied to expressions rather than external
+processes.
+
 Shell habits that need adjustment:
 
 - Variables are introduced with `let name := value`; there is no `$name`

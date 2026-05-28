@@ -103,6 +103,52 @@ Generated getters return the live value while it exists, or `null` after
 the referent has gone away. Generated `has_` methods return false once a
 weak referent has gone away.
 
+Weak references are useful for back-links and caches where one value
+should not keep another value alive on its own. The same idea is available
+outside class fields:
+
+```zzs
+class Owner {
+	let name with get;
+}
+
+let saved but weak;
+
+{
+	let owner := new Owner( name: "Zia" );
+	saved := owner;
+	say saved.get_name();       // Zia
+}
+
+// Later, after the only strong references are gone, saved may read as null.
+```
+
+You can also make a single weak write:
+
+```zzs
+let owner := new Owner( name: "Cache" );
+let cached := null;
+cached := owner but weak;
+```
+
+Collections have weak helpers for the same reason:
+
+```zzs
+let obj := new Owner( name: "Current" );
+
+let seen := [];
+seen.push_weak(obj);
+
+let by_name := {};
+by_name.set_weak( "current", obj );
+```
+
+Arrays support weak push/set-style operations, dictionaries and pair lists
+support weak key/value writes, and sets and bags can add weak entries.
+Scalar values such as strings, numbers, booleans, binary strings, and
+`null` are stored normally. Weak storage only changes how reference-capable
+values are held.
+
 A class can also be declared in a compact form with no body block:
 
 ```zzs
@@ -220,6 +266,33 @@ class Pet {
 	}
 }
 ```
+
+### Bound method values
+
+Sometimes you want to keep a method as a callable value. Reading a method
+through object slot syntax binds it to that object:
+
+```zzs
+class Counter {
+	let n := 0;
+
+	method inc_by ( amount ) {
+		n += amount;
+		return n;
+	}
+}
+
+let counter := new Counter();
+let bump := counter{inc_by};
+
+say typeof bump;             // Method
+say bump(3);                 // 3
+say bump(4);                 // 7
+```
+
+`bump` remembers `counter` as its receiver, so calls to `bump(...)` run
+the method with `self` bound to that object. This is handy for callbacks,
+dispatch tables, and worker-style APIs that expect a callable.
 
 
 ## 8.4 Inheritance: extending classes
@@ -687,7 +760,7 @@ Zia approves this architecture with a sleepy nod.
 ## 8.15 What comes next
 
 You now have the tools to shape programs around domain objects,
-capabilities, and relationships.
+capabilities, relationships, weak links, and callable method values.
 
 Next up: Chapter 9, where we talk about what happens when reality
 strikes back — errors, exceptions, and recoverable regret.

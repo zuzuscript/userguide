@@ -181,6 +181,33 @@ say tea_or_coffee( "Zia" );
 say tea_or_coffee( "Zenia", "tea" );
 ```
 
+Inside a function, `__argc__` is a const value containing the number of
+positional arguments that were actually supplied to the current call. That
+matters when an optional argument can be omitted or explicitly passed as
+`null`:
+
+```zzs
+function describe_label ( label? ) {
+	if ( __argc__ = 0 ) {
+		return "no argument was supplied";
+	}
+
+	if ( label ≡ null ) {
+		return "argument was explicit null";
+	}
+
+	return "label: " _ label;
+}
+
+say describe_label();       // no argument was supplied
+say describe_label(null);   // argument was explicit null
+say describe_label("Zia");  // label: Zia
+```
+
+Most functions do not need `__argc__`. It is there for APIs where the
+difference between "not provided" and "provided as `null`" is part of the
+contract.
+
 ### Ordering rule (important)
 
 Once a parameter is optional (`?`) or has a default (`:=`), following

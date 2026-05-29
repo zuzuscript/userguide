@@ -59,7 +59,7 @@ for name in [ x["name"] for x in rows if x["active"] ]:
 
 Becomes:
 
-``zzs
+```zzs
 for ( let name in rows.grep(fn x → x{active}).map(fn x → x{name}) ) {
 	say name;
 }

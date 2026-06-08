@@ -14,8 +14,82 @@ Notes:
 ```
 <program> ::= <statement-list> <eof>
 
-<statement-list> ::= ( <statement> ( ";" )* )*
+<statement-list> ::= <statement-separator>*
+	( <simple-statement-with-postfix> <statement-separator>+
+	| <non-simple-statement> <statement-separator>*
+	)* <simple-statement-with-postfix>?
 
+<statement-separator> ::= ";"
+
+<statement> ::= <block>
+	| <simple-statement-with-postfix>
+	| <non-simple-statement>
+
+<non-simple-statement> ::= <block>
+	| <function-def>
+	| <class-def>
+	| <trait-def>
+	| <if-stmt>
+	| <while-stmt>
+	| <for-stmt>
+	| <switch-stmt>
+	| <try-catch-stmt>
+
+<simple-statement-with-postfix> ::= <postfix-conditional-stmt>
+	| <postfix-for-stmt>
+	| <simple-statement>
+
+<simple-statement> ::= <let-decl>
+	| <const-decl>
+	| <return-stmt>
+	| <next-stmt>
+	| <continue-stmt>
+	| <last-stmt>
+	| <throw-stmt>
+	| <die-stmt>
+	| <import-stmt>
+	| <assignment-stmt>
+	| <expr-stmt>
+
+<postfix-conditional-stmt> ::= <postfixable-simple-statement> "if" <expression>
+	| <postfixable-simple-statement> "unless" <expression>
+
+<postfix-for-stmt> ::= <for-postfixable-simple-statement> "for" <expression>
+
+<postfixable-simple-statement> ::= <return-stmt>
+	| <next-stmt>
+	| <continue-stmt>
+	| <last-stmt>
+	| <throw-stmt>
+	| <die-stmt>
+	| <import-stmt>
+	| <assignment-stmt>
+	| <expr-stmt>
+
+<for-postfixable-simple-statement> ::= <return-stmt>
+	| <next-stmt>
+	| <continue-stmt>
+	| <last-stmt>
+	| <throw-stmt>
+	| <die-stmt>
+	| <assignment-stmt>
+	| <expr-stmt>
+
+<block> ::= "{" <statement-list> "}"
+
+<expr-stmt> ::= <expression>
+```
+
+Simple statements must be followed by `;` unless they are the final
+statement in a block or file. Non-simple statements do not require a
+terminating semicolon, but extra semicolons are allowed between statements.
+
+`let` and `const` declarations do not allow postfix modifiers. Imports allow
+postfix `if` and `unless`, but not postfix `for`.
+
+For reference, the statement categories are:
+
+```
 <statement> ::= <block>
 	| <let-decl>
 	| <const-decl>
@@ -38,22 +112,6 @@ Notes:
 	| <expr-stmt>
 	| <postfix-conditional-stmt>
 	| <postfix-for-stmt>
-
-<block> ::= "{" <statement-list> "}"
-
-<expr-stmt> ::= <expression>
-
-<postfix-conditional-stmt> ::= <simple-statement> "if" <expression>
-	| <simple-statement> "unless" <expression>
-
-<postfix-for-stmt> ::= <simple-statement> "for" <expression>
-
-<simple-statement> ::= <expr-stmt>
-	| <assignment-stmt>
-	| <next-stmt>
-	| <continue-stmt>
-	| <last-stmt>
-	| <return-stmt>
 ```
 
 ## 2. Declarations and assignments

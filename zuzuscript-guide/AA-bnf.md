@@ -381,6 +381,7 @@ Canonical async static methods use `async static method`. Perl accepts
 	| "==" | "≡" | "!=" | "≢"
 	| <concat-operator>
 	| "&" | "|" | "^"
+	| "«" | "»" | "<<" | ">>"
 	| "eq" | "ne" | "gt" | "ge" | "lt" | "le" | "cmp"
 	| "eqi" | "nei" | "gti" | "gei" | "lti" | "lei" | "cmpi"
 	| "and" | "or" | "xor" | "nand"
@@ -498,6 +499,7 @@ Canonical async static methods use `async static method`. Perl accepts
 <bool-literal> ::= "true" | "false" | "⊤" | "⊥"
 
 <number-literal> ::= <integer-literal> | <float-literal>
+	| <radix-integer-literal>
 
 <string-literal> ::= <dq-string> | <triple-dq-string>
 <binary-string-literal> ::= <sq-binary-string>
@@ -675,8 +677,14 @@ The following are reserved and cannot be used as identifiers:
 <comment> ::= "//" <until-eol>
 	| "/*" <any-char>* "*/"
 
-<integer-literal> ::= <digit>+
-<float-literal> ::= <digit>+ "." <digit>+
+<integer-literal> ::= <digit>+ <exponent>?
+<float-literal> ::= <digit>+ "." <digit>+ <exponent>?
+<exponent> ::= "E" ( "+" | "-" )? <digit>+
+	; the exponent marker must be upper-case
+<radix-integer-literal> ::= "0x" <hex-digit>+
+	| "0b" ( "0" | "1" )+
+	| "0o" ( "0".."7" )+
+	; the radix prefixes must be lower-case
 <hex-digit> ::= <digit> | "a".."f" | "A".."F"
 
 <dq-string> ::= '"' <dq-char>* '"'

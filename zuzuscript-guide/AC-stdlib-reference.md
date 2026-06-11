@@ -329,12 +329,17 @@ objects.
 ## std/string
 Provides common string manipulation and formatting helpers used across user modules and serializers. It includes substring, search, case conversion, and join/split helpers.
 
-**Exports:** `camel`, `chomp`, `index`, `join`, `kebab`, `pad`, `pattern_to_regexp`, `replace`, `rindex`, `search`, `snake`, `split`, `sprint`, `substr`, `title`, `trim`.
+**Exports:** `camel`, `chomp`, `chr`, `contains`, `ends_with`, `index`, `join`, `kebab`, `matches`, `ord`, `pad`, `pattern_to_regexp`, `quotemeta`, `replace`, `rindex`, `search`, `snake`, `split`, `sprint`, `starts_with`, `substr`, `title`, `to_binary`, `to_string`, `trim`.
 
 ## std/string/base64
 Provides base64 and URL-safe base64 encode/decode helpers. It converts between binary values and textual transport forms.
 
 **Exports:** `decode`, `decode_urlsafe`, `encode`, `encode_urlsafe`.
+
+## std/string/encode
+Converts between text and encoded bytes. All implementations support UTF-8, UTF-16, UTF-32, and ISO-8859-1 (matched case-insensitively), and may support further encodings where the host platform makes that practical. UTF-16 and UTF-32 encode to big-endian without a byte order mark; decoding honours a leading byte order mark and otherwise assumes big-endian.
+
+**Exports:** `ENCODING_LATIN`, `ENCODING_UTF8`, `ENCODING_UTF16`, `ENCODING_UTF32`, `decode`, `encode`.
 
 ## std/string/quoted_printable
 Provides quoted-printable encoding and decoding helpers for RFC 2045-style

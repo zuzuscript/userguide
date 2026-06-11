@@ -46,6 +46,34 @@ value := "Hello";         // this causes an error!!
 ```
 
 
+### Alternative ways to write numbers
+
+Plain decimal numbers like `4` and `2.5` cover most needs, but number
+literals come in a few other forms.
+
+Very large and very small numbers can be written in scientific notation
+("E notation") using an upper-case `E`:
+
+```zzs
+say 1E3;      // 1000
+say 2.5E-7;   // 0.00000025
+```
+
+Integers can also be written in hexadecimal (base 16), binary (base 2),
+or octal (base 8) using the prefixes `0x`, `0b`, and `0o`:
+
+```zzs
+say 0x1F;        // 31
+say 0b11111111;  // 255
+say 0o100;       // 64
+```
+
+Hexadecimal digits may be written in either case (`0xDEADBEEF` works),
+but the `E` of scientific notation must be upper-case and the letter in
+the `0x`, `0b`, and `0o` prefixes must be lower-case: `1e3` and `0X1F`
+are syntax errors. However it is written, the result is an ordinary
+`Number`; `0x1F` and `31` are the same value.
+
 ### Introducing the `typeof` operator
 
 The `typeof` operator tells you the data type associated with a value.
@@ -296,6 +324,8 @@ These are the rules ZuzuScript uses to coerce values to numbers:
 
 - anything which is already a `Number` stays that way
 - a `String` that looks like a number, such as `"5"` is interpreted as a number
+  (this includes scientific notation and the `0x`/`0b`/`0o` prefixes, and in
+  Strings the markers may be either case, so `"1e3"` and `"0X1F"` coerce fine)
 - the special value `null` is treated as 0
 - the special value `false` is treated as 0
 - the special value `true` is treated as 1

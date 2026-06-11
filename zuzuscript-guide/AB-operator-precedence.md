@@ -12,6 +12,10 @@ precedence to lowest precedence.
 - `**` is right-associative.
 - `▷` is left-associative; `◁` is right-associative. Their ASCII-safe
   aliases are `|>` and `<|`. The Unicode forms are canonical.
+- `«` (left shift) and `»` (right shift) have the ASCII-safe aliases
+  `<<` and `>>`. The Unicode forms are canonical. Inside a set literal,
+  a bare `>>` or `»` always closes the literal rather than acting as a
+  shift; parenthesize shift expressions used as set elements.
 - `⊤` and `⊥` are boolean literals, not operators, so they do not
   appear in the precedence table.
 - `?:`, `? :`, chain operators, and assignment operators are parsed
@@ -32,11 +36,12 @@ precedence to lowest precedence.
 |---|---|---|
 | Postfix | left-to-right chaining | `(...)` (call), `.name`, `.(expr)(...)`, `[index]`, `[start:length]`, `{key}`, postfix `++`, postfix `--` |
 | Prefix | right-to-left nesting | unary `+`, unary `-`, `!`, `¬`, unary `~`, unary `√`, `⌊...⌋`, `⌈...⌉`, unary `\\` (reference), `not`, `abs`, `sqrt`, `floor`, `ceil`, `round`, `int`, `uc`, `lc`, `length`, `typeof`, prefix `++`, prefix `--` |
-| 13 | right-to-left | `**` |
-| 12 | left-to-right | `*`, `/`, `×`, `÷`, `mod` |
-| 11 | left-to-right | `+`, `-` |
-| 10 | left-to-right | `_` |
-| 9 | left-to-right | `union`, `⋃`, `intersection`, `⋂`, `\\`, `∖` |
+| 14 | right-to-left | `**` |
+| 13 | left-to-right | `*`, `/`, `×`, `÷`, `mod` |
+| 12 | left-to-right | `+`, `-` |
+| 11 | left-to-right | `_` |
+| 10 | left-to-right | `union`, `⋃`, `intersection`, `⋂`, `\\`, `∖` |
+| 9 | left-to-right | `«`, `»` |
 | 8 | left-to-right | `&` |
 | 7 | left-to-right | `^` |
 | 6 | left-to-right | `\|` |

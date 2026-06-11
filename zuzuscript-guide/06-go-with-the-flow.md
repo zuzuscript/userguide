@@ -203,6 +203,38 @@ for ( let pair in my_dict.enumerate ) {
 }
 ```
 
+### Looping over Strings and BinaryStrings
+
+A `for` loop over a String visits each character in turn, as a
+one-character String:
+
+```zzs
+for ( let char in "héllo" ) {
+	say char;  # h, é, l, l, o
+}
+```
+
+Characters here means what Unicode calls code points, so `"é"` is a
+single character even though it takes more than one byte to store.
+
+Looping over a BinaryString visits each byte instead, as a one-byte
+BinaryString:
+
+```zzs
+let count := 0;
+
+for ( let byte in to_binary("héllo") ) {
+	count++;
+}
+
+say count;  # 6 — "é" takes two bytes in UTF-8
+```
+
+This is the same text either way; the difference is whether you are
+asking for its characters or for the raw bytes of its UTF-8 encoding.
+The postfix form of `for` (covered below) works with Strings and
+BinaryStrings too.
+
 It is also possible to loop over an iterator, which is a special type
 of function that will be covered in a future chapter.
 

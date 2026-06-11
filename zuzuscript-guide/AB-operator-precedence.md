@@ -16,6 +16,12 @@ precedence to lowest precedence.
   `<<` and `>>`. The Unicode forms are canonical. Inside a set literal,
   a bare `>>` or `»` always closes the literal rather than acting as a
   shift; parenthesize shift expressions used as set elements.
+- `a ∣ b` ("a divides b") is true when `b mod a` is zero; the left
+  operand is the divisor. Its ASCII-safe alias is the `divides`
+  keyword, with the Unicode form canonical. `a ∤ b` ("a does not
+  divide b") returns the Number `b mod a` rather than a strict
+  Boolean — non-zero, and therefore truthy, exactly when `a` does not
+  divide `b`. It has no ASCII alias.
 - `⊤` and `⊥` are boolean literals, not operators, so they do not
   appear in the precedence table.
 - `?:`, `? :`, chain operators, and assignment operators are parsed
@@ -45,7 +51,7 @@ precedence to lowest precedence.
 | 8 | left-to-right | `&` |
 | 7 | left-to-right | `^` |
 | 6 | left-to-right | `\|` |
-| 5 | left-to-right | `=`, `≠`, `<`, `>`, `<=`, `≤`, `>=`, `≥`, `<=>`, `≶`, `≷`, `eq`, `ne`, `gt`, `ge`, `lt`, `le`, `cmp`, `eqi`, `nei`, `gti`, `gei`, `lti`, `lei`, `cmpi`, `in`, `∈`, `∉`, `subsetof`, `⊂`, `supersetof`, `⊃`, `equivalentof`, `⊂⊃`, `instanceof`, `does`, `can`, binary `~`, `@`, `@?`, `@@` |
+| 5 | left-to-right | `=`, `≠`, `<`, `>`, `<=`, `≤`, `>=`, `≥`, `<=>`, `≶`, `≷`, `∣`, `divides`, `∤`, `eq`, `ne`, `gt`, `ge`, `lt`, `le`, `cmp`, `eqi`, `nei`, `gti`, `gei`, `lti`, `lei`, `cmpi`, `in`, `∈`, `∉`, `subsetof`, `⊂`, `supersetof`, `⊃`, `equivalentof`, `⊂⊃`, `instanceof`, `does`, `can`, binary `~`, `@`, `@?`, `@@` |
 | 4 | left-to-right | `==`, `≡`, `!=`, `≢`, `default` |
 | 3 | left-to-right | `and`, `⋀`, `nand`, `⊼` |
 | 2 | left-to-right | `xor`, `⊻` |

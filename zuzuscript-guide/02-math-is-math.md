@@ -133,6 +133,10 @@ a ** b;      // Exponention ("to the power of")
 a mod b;     // Modulo arithmetic (remainder after division)
 ```
 
+The `mod` operator is happy with non-integer operands (`7.5 mod 2` is
+`1.5`), and when operands are negative the result takes the sign of the
+left operand: `-7 mod 2` is `-1`, while `7 mod -2` is `1`.
+
 ### Numeric assignment operators
 
 If you want to update a variable using its current value, you can combine
@@ -307,6 +311,31 @@ which number is bigger comes in handy later if you are needing to sort a
 list of numbers in order.
 
 The `<=>` operator can also be written as `≶` or `≷`.
+
+### Divisibility
+
+The `∣` operator tests whether one number divides another exactly.
+`a ∣ b` is true when `b` is an exact multiple of `a` — that is, when
+`b mod a` is zero. Note the order: the divisor goes on the left.
+
+```zzs
+if ( 2 ∣ n ) {
+	say "n is even";
+}
+```
+
+If `∣` is awkward to type, the keyword `divides` means exactly the same
+thing: `2 divides n`.
+
+Its companion `∤` ("does not divide") is a little like `<=>`: rather
+than a strict boolean, `a ∤ b` returns the number `b mod a`. That
+remainder is non-zero — and therefore true — exactly when `a` does not
+divide `b`, and you also get to keep the remainder if you need it.
+
+```zzs
+let remainder := 4 ∤ 6;
+say remainder;  // 2, which is also "true"
+```
 
 
 ## 2.4 Numeric coercion

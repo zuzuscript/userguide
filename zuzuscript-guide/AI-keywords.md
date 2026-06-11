@@ -12,7 +12,7 @@ are included too.
 `__argc__`, `__file__`, `__global__`, `__system__`, `abs`, `and`, `as`,
 `assert`, `async`, `await`, `but`, `can`, `case`, `catch`, `ceil`, `class`,
 `clear`, `cmp`, `cmpi`, `const`, `continue`, `debug`, `default`, `die`,
-`do`, `does`, `else`, `eq`, `eqi`,
+`divides`, `do`, `does`, `else`, `eq`, `eqi`,
 `equivalentof`, `extends`, `false`, `floor`, `fn`, `for`, `from`,
 `function`, `ge`, `gei`, `get`, `gt`, `gti`, `has`, `if`, `import`, `in`,
 `instanceof`, `int`, `intersection`, `last`, `lc`, `le`, `lei`, `length`,
@@ -50,6 +50,7 @@ are included too.
 | `debug` | Emits debug output when the runtime debug level allows it. |
 | `default` | Starts the fallback branch in a `switch`, and acts as the default operator between option collections. |
 | `die` | Throws an exception-style failure value. |
+| `divides` | Divisibility test operator; ASCII alias for `∣`. |
 | `do` | Evaluates a block as an expression. |
 | `does` | Tests whether a value composes a trait. |
 | `else` | Introduces an alternate branch or loop fallback. |

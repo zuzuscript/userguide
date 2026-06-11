@@ -382,6 +382,7 @@ Canonical async static methods use `async static method`. Perl accepts
 	| <concat-operator>
 	| "&" | "|" | "^"
 	| "«" | "»" | "<<" | ">>"
+	| "∣" | "divides" | "∤"
 	| "eq" | "ne" | "gt" | "ge" | "lt" | "le" | "cmp"
 	| "eqi" | "nei" | "gti" | "gei" | "lti" | "lei" | "cmpi"
 	| "and" | "or" | "xor" | "nand"
@@ -646,6 +647,7 @@ The following are reserved and cannot be used as identifiers:
 "mod" "abs" "sqrt" "floor" "ceil" "round" "int" "length" "uc" "lc"
 "typeof" "instanceof" "does" "can"
 "union" "intersection" "subsetof" "supersetof" "equivalentof"
+"divides"
 "eq" "ne" "gt" "ge" "lt" "le" "cmp"
 "eqi" "nei" "gti" "gei" "lti" "lei" "cmpi"
 "from" "import" "as"

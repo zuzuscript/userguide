@@ -324,8 +324,10 @@ if ( 2 ∣ n ) {
 }
 ```
 
-If `∣` is awkward to type, the keyword `divides` means exactly the same
-thing: `2 divides n`.
+Note that `∣` is the Unicode character U+2223, and not the same as the
+`|` character you probably have on your keyboard. If `∣` is awkward to type,
+or too confusingly similar to `|` (they look identical in some fonts),
+the keyword `divides` means exactly the same thing: `2 divides n`.
 
 Its companion `∤` ("does not divide") is a little like `<=>`: rather
 than a strict boolean, `a ∤ b` returns the number `b mod a`. That

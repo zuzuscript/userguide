@@ -276,7 +276,7 @@ recipients, ordered headers, and raw binary message bodies.
 **Exports:** `Mailer`, `MailResult`.
 
 ## std/net/url
-Provides URL escaping/unescaping, parsing, and template filling helpers. It is used for URL normalization and query/path manipulation tasks.
+Provides URL escaping/unescaping, parsing, and template filling helpers. It is used for URL normalization and query/path manipulation tasks. `fill_template` is a complete RFC 6570 URI Template implementation (all four levels, every operator, and the `:N` prefix and `*` explode modifiers), validated against the official URI Template test suite.
 
 **Exports:** `escape`, `fill_template`, `parse`, `unescape`.
 

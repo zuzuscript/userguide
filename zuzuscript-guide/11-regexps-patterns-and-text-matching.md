@@ -1,5 +1,7 @@
 # Chapter 11: Regexps, Patterns, and Text Matching
 
+<img src="https://zuzulang.org/img/zia-zenia-regexp.jpeg" alt="You will find yourself leaning on Regexps a lot" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
+
 Chapter 10 showed how to split code into modules.
 
 Now we are going to spend a chapter on a small but powerful tool:

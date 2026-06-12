@@ -1,5 +1,7 @@
 # Chapter 10: Modules, Imports, and Reusable Code
 
+<img src="https://zuzulang.org/img/zia-importexport.jpeg" alt="Managing imports and exports with Zia" class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
+
 Chapter 9 was about handling failure well.
 
 Now we move from individual scripts to small systems.

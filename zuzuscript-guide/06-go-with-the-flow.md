@@ -403,6 +403,26 @@ say plan;
 
 Any comparison operator is allowed.
 
+Individual case values can also specify a comparison operator before the
+value. This overrides the switch comparator for that one value only.
+
+```zzs
+switch ( name : eq ) {
+	case "Alice":
+		team := "A";
+	case "Bob", ~ /^Rob/, eqi "ROBERT":
+		team := "B";
+	default:
+		team := "other";
+}
+```
+
+The second case is equivalent to testing:
+
+```zzs
+name eq "Bob" or name ~ /^Rob/ or name eqi "ROBERT"
+```
+
 ### Fallthrough is explicit with `continue`
 
 Unlike C-style switch semantics, cases do **not** fall through by

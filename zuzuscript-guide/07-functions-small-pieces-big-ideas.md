@@ -277,6 +277,9 @@ You can think of this as a practical named-parameter pattern:
 - caller writes labeled arguments,
 - function receives collected key/value pairs.
 
+Like Dict and PairList literals, a wordlike key before `:` does not need
+quotes. For example, `length: 42` is treated like `"length": 42`.
+
 It is a flexible pattern for options and evolving APIs.
 
 It is possible to define both kinds of collectors for the dame

@@ -191,11 +191,14 @@ For reference, the statement categories are:
 <switch-stmt> ::= "switch" "(" <expression> ( ":" <switch-operator> )? ")"
 	"{" <switch-case>+ <switch-default>? "}"
 
-<switch-case> ::= "case" <expression-list> ":" <statement-list>
+<switch-case> ::= "case" <switch-case-value>
+	( "," <switch-case-value> )* ":" <statement-list>
+
+<switch-case-value> ::= ( <switch-operator> )? <expression>
 
 <switch-default> ::= "default" ":" <statement-list>
 
-<switch-operator> ::= <binary-op>
+<switch-operator> ::= <comparison-op>
 
 <expression-list> ::= <expression> ( "," <expression> )*
 
@@ -397,6 +400,20 @@ Canonical async static methods use `async static method`. Perl accepts
 	| "\\" | "∖"
 	| "instanceof" | "does" | "can"
 	| "@" | "@?" | "@@"
+	| "~"
+
+<comparison-op> ::= "=" | "!=" | "≠" | "<" | ">" | "<=" | "≤" | ">=" | "≥"
+	| "<=>" | "≶" | "≷"
+	| "==" | "≡" | "≢"
+	| "∣" | "divides" | "∤"
+	| "eq" | "ne" | "gt" | "ge" | "lt" | "le" | "cmp"
+	| "eqi" | "nei" | "gti" | "gei" | "lti" | "lei" | "cmpi"
+	| "in" | "∈" | "∉"
+	| "subsetof" | "⊂"
+	| "supersetof" | "⊃"
+	| "equivalentof" | "⊂⊃"
+	| "instanceof" | "does" | "can"
+	| "@?"
 	| "~"
 
 <unary-expr> ::= <prefix-op> <unary-expr>

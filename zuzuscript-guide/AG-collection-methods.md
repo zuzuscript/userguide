@@ -1,8 +1,8 @@
 # Appendix G: Collection Methods
 
 This document lists the callable methods on ZuzuScript `Array`, `Bag`,
-`Set`, `Dict`, and `PairList` values as exposed by the current Perl
-implementation and mirrored by `zuzu-rust`.
+`Set`, `Dict`, and `PairList` values as exposed by the current Perl,
+Rust, and JavaScript implementations.
 
 `foo.bar` is method-call syntax in ZuzuScript, not property access. When a
 method takes no arguments, `foo.bar` is shorthand for `foo.bar()`.
@@ -40,6 +40,9 @@ weakness from a previous weak entry.
 | `set` | `index`, `value` | `Array` | Stores `value` at `index` and returns the same array. |
 | `set_weak` | `index`, `value` | `Array` | Stores `value` at `index` through weak-storage rules and returns the same array. |
 | `clear` | none | `Array` | Removes all elements and returns the same array. |
+| `join` | `separator`, optional `fallback` | `String` | Joins the array values after strict string coercion. If a value cannot be coerced to String, `fallback` may be a String substitute or a callback called as `fallback(value)` whose result is coerced to String. |
+| `slice` | `start`, optional `end` | `Array` | Returns a new array containing the values between `start` and `end`. Negative indexes count from the end; bounds are clamped; reversed bounds are accepted. |
+| `to_Array` | none | `Array` | Returns a shallow copy with independent outer storage and the same element values. |
 | `to_Set` | none | `Set` | Returns a set containing the unique array values. |
 | `to_Bag` | none | `Bag` | Returns a bag containing the array values, preserving duplicates. |
 | `to_Iterator` | none | `Function` | Returns an iterator function over the array values. |
@@ -70,11 +73,12 @@ weakness from a previous weak entry.
 | Method | Parameters | Returns | Description |
 | --- | --- | --- | --- |
 | `add`, `push` | `...values` | `Bag` | Adds one or more values and returns the same bag. |
-| `add_weak` | `value` | `Bag` | Adds `value` through weak-storage rules and returns the same bag. |
-| `remove`, `remove_first` | `value` | `Bag` | Removes one matching value and returns the same bag. |
+| `add_weak`, `push_weak` | `value` | `Bag` | Adds `value` through weak-storage rules and returns the same bag. |
+| `remove` | `value` | `Bag` | Removes all matching values and returns the same bag. |
+| `remove_first` | `value` | `Bag` | Removes one matching value and returns the same bag. |
 | `length` | none | `Number` | Returns the total number of items, including duplicates. |
 | `count` | optional `value` | `Number` | With no argument, returns the total item count. With a value, returns how many matching items exist. |
-| `empty` | none | `Boolean` | Returns whether the bag has no items. |
+| `empty`, `is_empty` | none | `Boolean` | Returns whether the bag has no items. |
 | `copy` | none | `Bag` | Returns a shallow copy with independent outer storage and the same item values. |
 | `clear` | none | `Bag` | Removes all items and returns the same bag. |
 | `contains` | `value` | `Boolean` | Returns whether the bag contains a matching value. |
@@ -99,7 +103,7 @@ weakness from a previous weak entry.
 | Method | Parameters | Returns | Description |
 | --- | --- | --- | --- |
 | `add`, `push` | `...values` | `Set` | Adds one or more values, deduplicating by set equality, and returns the same set. |
-| `add_weak` | `value` | `Set` | Adds `value` through weak-storage rules, deduplicating by resolved equality, and returns the same set. |
+| `add_weak`, `push_weak` | `value` | `Set` | Adds `value` through weak-storage rules, deduplicating by resolved equality, and returns the same set. |
 | `remove` | `value` | `Set` | Removes a matching value and returns the same set. |
 | `length`, `count` | none | `Number` | Returns the number of distinct items. |
 | `empty`, `is_empty` | none | `Boolean` | Returns whether the set has no items. |
@@ -135,7 +139,7 @@ weakness from a previous weak entry.
 | `keys` | none | `Set` | Returns a set of keys. |
 | `values` | none | `Bag` | Returns a bag of values. |
 | `enumerate` | none | `Bag` | Returns a bag of pair values. |
-| `has`, `exists` | `key` | `Boolean` | Returns whether the key exists. |
+| `has`, `exists`, `contains` | `key` | `Boolean` | Returns whether the key exists. |
 | `defined` | `key` | `Boolean` | Returns whether the key exists and its value is not `null`. |
 | `get` | `key`, optional `default` | `Any` | Returns the value for `key`, or `default`/`null` if absent. |
 | `copy` | none | `Dict` | Returns a shallow copy with independent outer storage and the same key/value entries. |
@@ -147,7 +151,7 @@ weakness from a previous weak entry.
 | `sorted_keys` | none | `Array` | Returns the sorted keys as an array. |
 | `remove` | `key` or predicate callback | `Dict` | Removes one key, or removes each pair for which the callback is truthy, then returns the same dict. |
 | `length`, `count` | none | `Number` | Returns the number of entries. |
-| `empty` | none | `Boolean` | Returns whether the dict has no entries. |
+| `empty`, `is_empty` | none | `Boolean` | Returns whether the dict has no entries. |
 | `clear` | none | `Dict` | Removes all entries and returns the same dict. |
 | `to_Array` | none | `Array` | Returns an array of pair values; do not rely on Dict key order. |
 | `to_Iterator` | none | `Function` | Returns an iterator function over keys. |
@@ -161,7 +165,7 @@ weakness from a previous weak entry.
 | --- | --- | --- | --- |
 | `keys` | none | `Array` | Returns the keys in pairlist order, preserving duplicates. |
 | `values` | none | `Array` | Returns the values in pairlist order. |
-| `enumerate` | none | `Bag` | Returns a bag of pair values in pairlist order. |
+| `enumerate` | none | `Array` | Returns an array of pair values in pairlist order. |
 | `has`, `exists` | `key` | `Boolean` | Returns whether any pair has the given key. |
 | `defined` | `key` | `Boolean` | Returns whether any pair with that key has a non-`null` value. |
 | `get` | `key`, optional `default` | `Any` | Returns the first value for `key`, or `default`/`null` if absent. |
@@ -175,7 +179,7 @@ weakness from a previous weak entry.
 | `sorted_keys` | none | `Array` | Returns the keys sorted as strings. |
 | `remove` | `key` or predicate callback | `PairList` | Removes all pairs for a key, or removes each pair for which the callback is truthy, then returns the same pairlist. |
 | `length`, `count` | none | `Number` | Returns the number of pairs. |
-| `empty` | none | `Boolean` | Returns whether the pairlist has no pairs. |
+| `empty`, `is_empty` | none | `Boolean` | Returns whether the pairlist has no pairs. |
 | `clear` | none | `PairList` | Removes all pairs and returns the same pairlist. |
 | `to_Array` | none | `Array` | Returns an array of pair values in pairlist order. |
 | `to_Iterator` | none | `Function` | Returns an iterator function over keys in pairlist order. |

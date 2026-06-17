@@ -107,7 +107,58 @@ One key thing to notice: the number `0` is coerced to false, but the string
 `"0"` is coerced to true. 
 
 
-## 5.5 The ternary operator
+## 5.5 Value-preserving Boolean operators
+
+The Boolean operators above always return Boolean values: `true` or `false`.
+Sometimes you want to make the same kind of logical choice, but keep one of
+the original values.
+
+That is what the value-preserving Boolean operators are for. They use the
+same names with a `?` suffix.
+
+```zzs
+let title := custom_title or? "Untitled";
+```
+
+This is like `or`, but instead of returning `true`, it returns the first
+truthy value. If `custom_title` is falsey, it returns `"Untitled"`.
+
+The two most useful ones are `and?` and `or?`.
+
+```zzs
+user and? user.name;       // null if user is null, otherwise user.name
+name or? "Anonymous";      // name if name is truthy, otherwise "Anonymous"
+```
+
+`and?` returns its left value when that value is falsey. Otherwise it returns
+the right value. Like `and`, it does not evaluate the right side when the
+left side is falsey.
+
+`or?` returns its left value when that value is truthy. Otherwise it returns
+the right value. Like `or`, it does not evaluate the right side when the left
+side is truthy.
+
+There are also value-preserving forms of `xor` and `nand`.
+
+```zzs
+a xor? b;   // returns the one truthy value, or false
+a nand? b;  // value-preserving form of nand
+```
+
+`xor?` is useful when exactly one of two values should be present. If both
+are truthy, or both are falsey, it returns `false`. If exactly one is truthy,
+it returns that original value.
+
+`nand?` is less common, but follows the same naming pattern. It is the
+value-preserving form of `nand`: when `nand` would be false because both
+values are truthy, `nand?` returns `false`; in the case where the right side
+is the only truthy value, it preserves and returns that right-side value.
+
+The Unicode spellings work too: `⋀?`, `⋁?`, `⊻?`, and `⊼?`. In ordinary
+code, the word spellings are usually easier to type and read.
+
+
+## 5.6 The ternary operator
 
 The ternary operator is a widely used logical operator that many programming
 languages have. The operators we've looked at so far have been unary (working
@@ -136,7 +187,7 @@ let tmpl :=
 ```
 
 
-## 5.6 The Elvis Operator
+## 5.7 The Elvis Operator
 
 <img src="https://zuzulang.org/img/zia-elvis.jpeg" alt="Zia, for one night only." class="w-50 float-end d-none d-lg-block ms-3 mb-3 rounded" />
 
@@ -183,7 +234,7 @@ This is useful for defaults. You can set a fallback without overwriting a
 value that was already provided by the user, a config file, or another part
 of the program.
 
-## 5.7 Type-Aware comparison operators
+## 5.8 Type-Aware comparison operators
 
 We've covered all of Zuzu's basic builtin types (`Number`, `String`,
 `BinaryString`, `Null`, and `Boolean`) as well as collection types
@@ -219,13 +270,14 @@ a != b;   // Same, but easier to type
 ```
 
 
-## 5.8 Recap
+## 5.9 Recap
 
 In this chapter, we covered:
 
 - the `Null` and `Boolean` data types
 - boolean (logical) operators
 - coercion to boolean
+- value-preserving Boolean operators
 - the ternary and Elvis operators
 - type-aware equality operators
 

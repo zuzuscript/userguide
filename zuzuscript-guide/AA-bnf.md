@@ -388,8 +388,14 @@ Canonical async static methods use `async static method`. Perl accepts
 	| "∣" | "divides" | "∤"
 	| "eq" | "ne" | "gt" | "ge" | "lt" | "le" | "cmp"
 	| "eqi" | "nei" | "gti" | "gei" | "lti" | "lei" | "cmpi"
-	| "and" | "or" | "xor" | "nand"
-	| "⋀" | "⋁" | "⊻" | "⊼"
+	| "and" | "and?" | "or" | "or?"
+	| "xor" | "xor?" | "nand" | "nand?"
+	| "nor" | "nor?" | "xnor" | "xnor?"
+	| "onlyif" | "onlyif?" | "butnot" | "butnot?"
+	| "⋀" | "⋀?" | "⋁" | "⋁?"
+	| "⊻" | "⊻?" | "⊼" | "⊼?"
+	| "⊽" | "⊽?" | "↔" | "↔?"
+	| "⊨" | "⊨?" | "⊭" | "⊭?"
 	| "in" | "∈" | "∉"
 	| "union" | "⋃"
 	| "intersection" | "⋂"
@@ -602,8 +608,14 @@ Canonical async static methods use `async static method`. Perl accepts
 ### 8.5 Boolean operations
 
 ```
-"and" "or" "xor" "nand"
-"⋀" "⋁" "⊻" "⊼"
+"and" "and?" "or" "or?"
+"xor" "xor?" "nand" "nand?"
+"nor" "nor?" "xnor" "xnor?"
+"onlyif" "onlyif?" "butnot" "butnot?"
+"⋀" "⋀?" "⋁" "⋁?"
+"⊻" "⊻?" "⊼" "⊼?"
+"⊽" "⊽?" "↔" "↔?"
+"⊨" "⊨?" "⊭" "⊭?"
 "!" "not" "¬"
 ```
 
@@ -660,7 +672,7 @@ The following are reserved and cannot be used as identifiers:
 "switch" "case" "default"
 "new" "self" "super" "fn"
 "null" "true" "false"
-"and" "or" "xor" "nand" "not"
+"and" "or" "xor" "nand" "nor" "xnor" "onlyif" "butnot" "not"
 "mod" "abs" "sqrt" "floor" "ceil" "round" "int" "length" "uc" "lc"
 "typeof" "instanceof" "does" "can"
 "union" "intersection" "subsetof" "supersetof" "equivalentof"

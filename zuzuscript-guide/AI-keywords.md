@@ -10,17 +10,17 @@ are included too.
 ## Alphabetical List
 
 `__argc__`, `__file__`, `__global__`, `__system__`, `abs`, `and`, `as`,
-`assert`, `async`, `await`, `but`, `can`, `case`, `catch`, `ceil`, `class`,
+`assert`, `async`, `await`, `but`, `butnot`, `can`, `case`, `catch`, `ceil`, `class`,
 `clear`, `cmp`, `cmpi`, `const`, `continue`, `debug`, `default`, `die`,
 `divides`, `do`, `does`, `else`, `eq`, `eqi`,
 `equivalentof`, `extends`, `false`, `floor`, `fn`, `for`, `from`,
 `function`, `ge`, `gei`, `get`, `gt`, `gti`, `has`, `if`, `import`, `in`,
 `instanceof`, `int`, `intersection`, `last`, `lc`, `le`, `lei`, `length`,
 `let`, `lt`, `lti`, `method`, `mod`, `nand`, `ne`, `nei`, `new`, `next`,
-`not`, `null`, `or`, `print`, `return`, `round`, `say`, `self`, `set`,
+`nor`, `not`, `null`, `onlyif`, `or`, `print`, `return`, `round`, `say`, `self`, `set`,
 `spawn`, `sqrt`, `static`, `subsetof`, `supersetof`, `super`, `switch`,
 `throw`, `trait`, `true`, `try`, `typeof`, `uc`, `union`, `unless`,
-`warn`, `weak`, `while`, `with`, `xor`.
+`warn`, `weak`, `while`, `with`, `xnor`, `xor`.
 
 ## Keyword Table
 
@@ -37,6 +37,7 @@ are included too.
 | `async` | Marks an async function, method, or lambda. |
 | `await` | Waits for an asynchronous block or task result. |
 | `but` | Composes traits like `with`, and introduces `but weak`. |
+| `butnot` | Boolean AND NOT operator. |
 | `can` | Tests whether a value supports a method name. |
 | `case` | Starts a `switch` branch. |
 | `catch` | Handles values thrown from a `try` block. |
@@ -91,8 +92,10 @@ are included too.
 | `nei` | Case-insensitive string inequality operator. |
 | `new` | Constructs an object from a class. |
 | `next` | Skips to the next loop iteration. |
+| `nor` | Boolean NOR operator. |
 | `not` | Boolean negation operator. |
 | `null` | Null literal. |
+| `onlyif` | Boolean implication operator. |
 | `or` | Boolean disjunction operator. |
 | `print` | Prints values without adding a newline. |
 | `return` | Returns from the current function or method. |
@@ -119,4 +122,5 @@ are included too.
 | `weak` | Marks weak storage in the `but weak` modifier. |
 | `while` | Starts a conditional loop. |
 | `with` | Adds traits to a class, or field accessors to a field. |
+| `xnor` | Boolean XNOR operator. |
 | `xor` | Boolean exclusive-or operator. |

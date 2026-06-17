@@ -42,20 +42,21 @@ precedence to lowest precedence.
 |---|---|---|
 | Postfix | left-to-right chaining | `(...)` (call), `.name`, `.(expr)(...)`, `[index]`, `[start:length]`, `{key}`, postfix `++`, postfix `--` |
 | Prefix | right-to-left nesting | unary `+`, unary `-`, `!`, `¬`, unary `~`, unary `√`, `⌊...⌋`, `⌈...⌉`, unary `\\` (reference), `not`, `abs`, `sqrt`, `floor`, `ceil`, `round`, `int`, `uc`, `lc`, `length`, `typeof`, prefix `++`, prefix `--` |
-| 14 | right-to-left | `**` |
-| 13 | left-to-right | `*`, `/`, `×`, `÷`, `mod` |
-| 12 | left-to-right | `+`, `-` |
-| 11 | left-to-right | `_` |
-| 10 | left-to-right | `union`, `⋃`, `intersection`, `⋂`, `\\`, `∖` |
-| 9 | left-to-right | `«`, `»` |
-| 8 | left-to-right | `&` |
-| 7 | left-to-right | `^` |
-| 6 | left-to-right | `\|` |
-| 5 | left-to-right | `=`, `≠`, `<`, `>`, `<=`, `≤`, `>=`, `≥`, `<=>`, `≶`, `≷`, `∣`, `divides`, `∤`, `eq`, `ne`, `gt`, `ge`, `lt`, `le`, `cmp`, `eqi`, `nei`, `gti`, `gei`, `lti`, `lei`, `cmpi`, `in`, `∈`, `∉`, `subsetof`, `⊂`, `supersetof`, `⊃`, `equivalentof`, `⊂⊃`, `instanceof`, `does`, `can`, binary `~`, `@`, `@?`, `@@` |
-| 4 | left-to-right | `==`, `≡`, `!=`, `≢`, `default` |
-| 3 | left-to-right | `and`, `⋀`, `nand`, `⊼` |
-| 2 | left-to-right | `xor`, `⊻` |
-| 1 | left-to-right | `or`, `⋁` |
+| 15 | right-to-left | `**` |
+| 14 | left-to-right | `*`, `/`, `×`, `÷`, `mod` |
+| 13 | left-to-right | `+`, `-` |
+| 12 | left-to-right | `_` |
+| 11 | left-to-right | `union`, `⋃`, `intersection`, `⋂`, `\\`, `∖` |
+| 10 | left-to-right | `«`, `»` |
+| 9 | left-to-right | `&` |
+| 8 | left-to-right | `^` |
+| 7 | left-to-right | `\|` |
+| 6 | left-to-right | `=`, `≠`, `<`, `>`, `<=`, `≤`, `>=`, `≥`, `<=>`, `≶`, `≷`, `∣`, `divides`, `∤`, `eq`, `ne`, `gt`, `ge`, `lt`, `le`, `cmp`, `eqi`, `nei`, `gti`, `gei`, `lti`, `lei`, `cmpi`, `in`, `∈`, `∉`, `subsetof`, `⊂`, `supersetof`, `⊃`, `equivalentof`, `⊂⊃`, `instanceof`, `does`, `can`, binary `~`, `@`, `@?`, `@@` |
+| 5 | left-to-right | `==`, `≡`, `!=`, `≢`, `default` |
+| 4 | left-to-right | `and`, `⋀`, `and?`, `⋀?`, `nand`, `⊼`, `nand?`, `⊼?`, `butnot`, `⊭`, `butnot?`, `⊭?` |
+| 3 | left-to-right | `xor`, `⊻`, `xor?`, `⊻?`, `nor`, `⊽`, `nor?`, `⊽?`, `xnor`, `↔`, `xnor?`, `↔?` |
+| 2 | right-to-left | `onlyif`, `⊨`, `onlyif?`, `⊨?` |
+| 1 | left-to-right | `or`, `⋁`, `or?`, `⋁?` |
 | Ternary | right-to-left grouping in practice | `? :`, `?:` |
 | Chain | by direction | `▷`, `◁`, `\|>`, `<\|` |
 | Assignment | right-to-left grouping in practice | `:=`, `~=`, `+=`, `-=`, `*=`, `×=`, `/=`, `÷=`, `**=`, `_=`, `?:=` |

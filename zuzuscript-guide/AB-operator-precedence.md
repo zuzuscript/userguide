@@ -41,7 +41,7 @@ precedence to lowest precedence.
 | Level | Associativity | Operators |
 |---|---|---|
 | Postfix | left-to-right chaining | `(...)` (call), `.name`, `.(expr)(...)`, `[index]`, `[start:length]`, `{key}`, postfix `++`, postfix `--` |
-| Prefix | right-to-left nesting | unary `+`, unary `-`, `!`, `¬`, unary `~`, unary `√`, `⌊...⌋`, `⌈...⌉`, unary `\\` (reference), `not`, `abs`, `sqrt`, `floor`, `ceil`, `round`, `int`, `uc`, `lc`, `length`, `typeof`, prefix `++`, prefix `--` |
+| Prefix | right-to-left nesting | unary `+`, unary `-`, `!`, `¬`, unary `~`, unary `√`, `⌊...⌋`, `⌈...⌉`, unary `#` (cardinality), unary `\\` (reference), `not`, `abs`, `sqrt`, `floor`, `ceil`, `round`, `int`, `uc`, `lc`, `length`, `typeof`, prefix `++`, prefix `--` |
 | 15 | right-to-left | `**` |
 | 14 | left-to-right | `*`, `/`, `×`, `÷`, `mod` |
 | 13 | left-to-right | `+`, `-` |
@@ -72,6 +72,8 @@ Some tokens are valid in more than one role:
 - `~` is both unary bitwise-not (prefix) and binary regexp-match.
 - `\\` is both unary reference (prefix) and binary set difference.
 - `+` and `-` can be unary (prefix) or binary arithmetic.
+- `#` is a prefix operator for cardinality; `#` followed by `!` at the
+  start of a file is still a shebang line.
 - `++` and `--` can be prefix or postfix.
 - `...` is a range operator inside collection literals, a variadic marker
   in parameter lists, and argument spread inside call argument lists.

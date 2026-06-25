@@ -201,13 +201,16 @@ There are also a few prefix operators supported on strings:
 
 ```zzs
 length a;      // Length of string
+#a;            // Short form for length/cardinality
 uc a;          // Uppercase, String only
 lc a;          // Lowercase, String only
 ~a;            // Bitwise NOT, BinaryString only
 ```
 
 The `length` operator will return the number of characters of a `String`
-or the number of bytes of a `BinaryString`.
+or the number of bytes of a `BinaryString`. The `#` operator gives the
+same result for strings, but for collections and objects it asks for
+cardinality first; see Chapter 4.
 
 
 ## 3.5 String comparison operators

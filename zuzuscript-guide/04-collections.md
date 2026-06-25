@@ -196,6 +196,23 @@ use to work with them. Some operators will act slightly differently depending
 on what type of collection (`Array`, `Dict`, `Set`, `Bag`, or `PairList`)
 you use them with.
 
+The `#` prefix operator asks "how many?":
+
+```zzs
+let tasks := [ "coffee", "code", "sleep" ];
+
+say #tasks;                 // 3
+say #{ alpha: 1, beta: 2 };  // 2
+```
+
+For built-in collections, `#collection` returns the same count as
+`collection.count()`. For objects, `#object` calls a concrete `count()`
+method when one is defined or inherited. If no concrete `count()` method
+exists, it falls back to the same behaviour as `length`, so strings return
+character counts and binary strings return byte counts. A missing method
+handled only through `__call__` is not considered a concrete `count()`
+method.
+
 One of the most useful is `∈` which has alternative spelling `in`.
 
 ```zzs

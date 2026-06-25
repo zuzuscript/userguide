@@ -294,6 +294,26 @@ say bump(4);                 // 7
 the method with `self` bound to that object. This is handy for callbacks,
 dispatch tables, and worker-style APIs that expect a callable.
 
+### Missing method fallback with `__call__`
+
+A class may define `__call__` to handle method names that are not otherwise
+defined. Ordinary method lookup still happens first, including inherited
+methods and methods supplied by traits. The fallback only runs when that
+lookup fails.
+
+```zzs
+class DynamicThing {
+	method __call__ ( String name, Array args, PairList opts ) {
+		return "missing method: " _ name;
+	}
+}
+
+let d := new DynamicThing();
+say d.whatever();  // missing method: whatever
+```
+
+The fallback receives the missing method name, positional arguments as an
+`Array`, and named arguments as a `PairList`.
 
 ## 8.4 Inheritance: extending classes
 

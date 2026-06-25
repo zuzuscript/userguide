@@ -97,9 +97,9 @@ say settings{snack};       // berries
 say friends[0]{name};      // Zia
 ```
 
-The expression on the right is evaluated once. It must be a Dict or
-PairList. Each entry in the pattern reads a key and creates a local
-binding.
+The expression on the right is evaluated once. It may be a Dict, PairList,
+or Array. Dicts and PairLists read the named keys in the pattern. Arrays
+bind entries by position from left to right.
 
 Use `let` for mutable bindings and `const` for bindings that should not
 be reassigned:
@@ -120,15 +120,17 @@ When you need to update an existing value inside a structure, use ordinary
 assignment, a path assignment, or a reference.
 
 
-## 12.3 Shorthand, aliases, and types
+## 12.3 Shorthand, aliases, arrays, and types
 
-The shorthand form uses the local binding name as the key:
+For Dict and PairList sources, the shorthand form uses the local binding
+name as the key:
 
 ```zzs
 let { friends } := den;
 ```
 
-Use `key: local_name` when the local name should differ from the key:
+Use `key: local_name` when the local name should differ from the Dict or
+PairList key:
 
 ```zzs
 let { name: den_name } := den;
@@ -147,6 +149,23 @@ let {
 
 The type goes next to the local binding, not next to the source key.
 
+For Array sources, the same declaration pattern binds values by position.
+The first entry receives index `0`, the second receives index `1`, and so
+on:
+
+```zzs
+let row := [ "Ada", "Lovelace", 36 ];
+let { first_name, family_name, age: Number years } := row;
+
+say first_name;             // Ada
+say family_name;            // Lovelace
+say years;                  // 36
+```
+
+When the source is an Array, aliases such as `age: Number years` use the
+alias key only to name the local binding form. They do not look up an Array
+key named `age`.
+
 
 ## 12.4 Defaults in destructuring
 
@@ -159,8 +178,9 @@ say location;               // unknown
 say name;                   // The Quiet Den
 ```
 
-The default runs only when the key is absent. If a key exists and its
-value is `null`, the default is not used.
+For Dicts and PairLists, the default runs only when the key is absent. For
+Arrays, it runs only when the corresponding position is missing. If a key
+or Array position exists and its value is `null`, the default is not used.
 
 Defaults in destructuring use `:=`. That is different from the `default`
 operator from Chapter 4:
@@ -187,8 +207,8 @@ keys. `default` is not a deep merge, so apply it at the level you mean.
 
 ## 12.5 String keys and computed keys
 
-Destructuring keys can be identifiers, strings, templates, or computed
-expressions:
+For Dict and PairList sources, destructuring keys can be identifiers,
+strings, templates, or computed expressions:
 
 ```zzs
 let headers := {
@@ -207,13 +227,15 @@ say content_type;            // text/plain
 say den_kind;                // quiet
 ```
 
-Computed keys are useful when the key is not a word-like identifier.
+Computed keys are useful when the key is not a word-like identifier. For
+Array sources, entries are positional, so computed keys are ignored for
+lookup.
 
 
 ## 12.6 Destructuring is shallow
 
-The declaration pattern reads keys from one Dict or PairList. It does not
-walk through an entire nested structure for you.
+The declaration pattern reads keys from one Dict or PairList, or positions
+from one Array. It does not walk through an entire nested structure for you.
 
 For nested values, destructure in stages:
 
@@ -531,7 +553,8 @@ conditional.
 
 You now have the main tools for nested data:
 
-- destructuring declarations bind selected Dict or PairList keys,
+- destructuring declarations bind selected Dict or PairList keys, or Array
+  positions,
 - destructuring defaults use `:=`,
 - the `default` operator fills missing option keys in Dicts and PairLists,
 - `@`, `@@`, and `@?` query nested data through the active path syntax,

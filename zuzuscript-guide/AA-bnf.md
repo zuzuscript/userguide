@@ -435,7 +435,7 @@ Canonical async static methods use `async static method`. Perl accepts
 	| "~"
 	| "abs" | "sqrt" | "√"
 	| "floor" | "ceil" | "round" | "int"
-	| "uc" | "lc" | "length"
+	| "uc" | "lc" | "length" | "#"
 	| "typeof"
 	| "new"
 
@@ -629,6 +629,7 @@ Canonical async static methods use `async static method`. Perl accepts
 "supersetof" "⊃"
 "equivalentof" "⊂⊃"
 "default"
+"#" ; cardinality prefix
 ```
 ### 8.7 Mutation operators
 
